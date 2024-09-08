@@ -1,0 +1,1 @@
+Navigating into the photo page client-side will open a modal instead of a full page, while still updating the URL. Navigating directly into the photo page URL or refreshing the page while the modal is open will bring up the photo page instead.
