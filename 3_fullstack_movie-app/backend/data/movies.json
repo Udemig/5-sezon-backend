@@ -1,0 +1,64 @@
+{
+  "movies": [
+    {
+      "id": "213976be-9157-4daa-992b-5b93f68540a6",
+      "title": "Para Avcısı",
+      "year": "2013",
+      "genre": ["Biyografi", "Komedi", "Suç"],
+      "rating": "9.4",
+      "description": "Jordan Belfort'un yükseliş ve düşüş hikayesini anlatan biyografik bir film.",
+      "director": "Martin Scorsese",
+      "cast": ["Leonardo DiCaprio", "Jonah Hill", "Margot Robbie"],
+      "duration": "3s",
+      "language": "İngilizce"
+    },
+    {
+      "title": "Yenilmezler: Sonsuzluk Savaşı",
+      "year": "2020",
+      "genre": ["Aksiyon", "Macera", "Fantastik"],
+      "rating": "7.9",
+      "id": "3711087e-2863-427e-86d8-1548c3e7b0db",
+      "description": "Süper kahramanlar, evrenin kaderini belirlemek için Thanos'a karşı savaşıyor.",
+      "director": "Anthony Russo, Joe Russo",
+      "cast": ["Robert Downey Jr.", "Chris Evans", "Chris Hemsworth"],
+      "duration": "2s 29dk",
+      "language": "İngilizce"
+    },
+    {
+      "id": "131c8241-fcae-4425-94b7-e410fb285018",
+      "title": "Görevimiz Tehlike: Hayalet Protokol",
+      "year": "2015",
+      "genre": ["Aksiyon", "Macera", "Fantastik"],
+      "rating": "7.9",
+      "description": "Ethan Hunt ve ekibi, yeni bir tehdit ile karşı karşıya kalıyor.",
+      "director": "Christopher McQuarrie",
+      "cast": ["Tom Cruise", "Rebecca Ferguson", "Jeremy Renner"],
+      "duration": "2s 11dk",
+      "language": "İngilizce"
+    },
+    {
+      "title": "Görevimiz Tehlike",
+      "year": "2021",
+      "genre": ["Aksiyon", "Bilim Kurgu", "Suç"],
+      "rating": "8.7",
+      "id": "7b027577-68e3-430a-8518-923a41bce250",
+      "description": "Bir casusluk görevinde, Ethan Hunt yine tehlikeli bir maceraya atılıyor.",
+      "director": "Christopher McQuarrie",
+      "cast": ["Tom Cruise", "Hayley Atwell", "Ving Rhames"],
+      "duration": "2s 28dk",
+      "language": "İngilizce"
+    },
+    {
+      "title": "Dark",
+      "genre": ["Gizem", "Bilim Kurgu"],
+      "rating": "9",
+      "year": "2020",
+      "id": "c3a168c2-8168-4f3c-887a-17bb8d0bde0a",
+      "description": "Zaman yolculuğu ve gizemli olayların yaşandığı bir Alman dizisi.",
+      "director": "Baran bo Odar",
+      "cast": ["Louis Hofmann", "Karoline Eichhorn", "Lisa Vicari"],
+      "duration": "1s",
+      "language": "Almanca"
+    }
+  ]
+}
