@@ -8,6 +8,8 @@ const defaultRequest = require("./methods/default");
 const server = http.createServer((req, res) => {
   // bütün cevaplara eklenicek ortak veri tipi header'ı ekleyelim
   res.setHeader("Content-Type", "application/json");
+  // kaynak paylaşımında sorun yaşaamk için (CORS)
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5174");
 
   // gelen isteğin method türüne göre cleint'a farklı cevaplar göndericez.
   // kod kalabalığı olmaması için isteklere cevap gönderen fonksiyonları ayrı dosylarda tanımladık.
