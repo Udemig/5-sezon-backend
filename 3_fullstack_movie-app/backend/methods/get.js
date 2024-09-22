@@ -24,7 +24,7 @@ const getRequest = (req, res) => {
     );
 
     // 2) url'deki id'ye karşılık gelen elemanı dizide ara
-    const movie = data.movies.find((i) => i.id === id);
+    const movie = data.find((i) => i.id === id);
 
     // 3) eğerki film bulunursa client'a gönder
     if (movie) {

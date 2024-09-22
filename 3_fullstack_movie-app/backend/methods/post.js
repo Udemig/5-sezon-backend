@@ -35,7 +35,7 @@ const postRequest = async (req, res) => {
     data = JSON.parse(data);
 
     // mevcut filmlerin üzerine yeni film ekle
-    data.movies.push(body);
+    data.push(body);
 
     // json dosyasını güncelle
     fs.writeFileSync("./data/movies.json", JSON.stringify(data));

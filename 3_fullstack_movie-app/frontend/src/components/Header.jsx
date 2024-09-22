@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="flex justify-between items-center px-5 md:px-10 border-b shadow mb-10">
+    <header className="flex justify-between items-center px-5 md:px-10 border-b shadow">
       <Link to="/" className="flex items-center">
         <img width={80} src="/movie-logo.png" />
         <h2 className="font-bold text-2xl max-sm:hidden">Filmania</h2>
