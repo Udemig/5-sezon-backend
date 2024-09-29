@@ -2,19 +2,13 @@ const fs = require("fs");
 
 const getRequest = (req, res) => {
   // url'in temel adresini değişkene aktar (sondaki param dışarısnında kalan)
-  const path = req.url.substring(0, req.url.lastIndexOf("/"));
+  const path = req.url.slice(0, 11);
 
   // url'in sonundaki id değerini değişkene aktar
   const id = req.url.split("/")[3];
 
-  // temel url'e istek atılırsa bütün filmleri gönder
-  if (req.url === "/api/movies") {
-    // 1) json dosyasından filmleri al
-    const movies = fs.readFileSync("./data/movies.json", "utf-8");
-
-    // 2) client'a cevap gönder
-    return res.end(movies);
-  }
+  // url'in sonundaki parametrenin değerini al
+  const param = req.url.split("=").pop().toLowerCase().trim();
 
   // yola id eklenirse bir filmi gönder
   if (path === "/api/movies" && id) {
@@ -36,6 +30,26 @@ const getRequest = (req, res) => {
     return res.end(
       JSON.stringify({ message: "Aranılan film bulunamadı" })
     );
+  }
+
+  // temel url'e istek atılırsa bütün filmleri gönder
+  if (path === "/api/movies") {
+    // 1) json dosyasından filmleri al
+    const movies = JSON.parse(
+      fs.readFileSync("./data/movies.json", "utf-8")
+    );
+
+    // eğer parametre varsa filtrelenmiş filmleri gönder
+    if (param && param !== "/api/movies") {
+      const filtred = movies.filter((movie) =>
+        movie.title.toLowerCase().includes(param)
+      );
+
+      return res.end(JSON.stringify(filtred));
+    }
+
+    // eğer parmaetre yoksa bütün fişlmleri gönder
+    return res.end(JSON.stringify(movies));
   }
 
   // yol yanlışsa hata gönder

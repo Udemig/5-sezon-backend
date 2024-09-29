@@ -10,7 +10,7 @@ const server = http.createServer((req, res) => {
   // bütün cevaplara eklenicek ortak veri tipi header'ı ekleyelim
   res.setHeader("Content-Type", "application/json");
   // kaynak paylaşımında sorun yaşamamak için (CORS)
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5174");
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   console.log("🎾🎾 İSTEK GELDİ!!", req.method);
 

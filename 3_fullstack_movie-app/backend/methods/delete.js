@@ -14,7 +14,7 @@ const deleteRequest = (req, res) => {
     );
 
     // parametre olarak gelen id'li film dizi var mı ara
-    const isFound = data.movies.find((i) => i.id === id);
+    const isFound = data.find((i) => i.id === id);
 
     // yoksa id geçersiz hatası gönder
     if (!isFound) {
@@ -23,7 +23,7 @@ const deleteRequest = (req, res) => {
     }
 
     // diziden id'si bilinen filmi kaldır
-    const filtred = data.movies.filter((i) => i.id !== id);
+    const filtred = data.filter((i) => i.id !== id);
 
     // json dosyasına yeni diziyi aktar
     fs.writeFileSync("./data/movies.json", JSON.stringify(filtred));
