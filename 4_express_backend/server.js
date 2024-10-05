@@ -1,13 +1,6 @@
 const express = require("express");
-const {
-  getAllCars,
-  getCar,
-  deleteCar,
-  updateCar,
-  createCar,
-} = require("./controllers");
 const { logger } = require("./middleware");
-const idControl = require("./middleware/idControl");
+const carRoutes = require("./routes/carRoutes");
 
 // kurulum
 const app = express();
@@ -20,16 +13,7 @@ app.use(logger);
 app.use(express.json());
 
 // route/endpoint 'leri tanımla
-app
-  .route("/api/v1/cars")
-  .get(getAllCars) //
-  .post(createCar);
-
-app
-  .route("/api/v1/cars/:id")
-  .get(idControl, getCar)
-  .patch(idControl, updateCar)
-  .delete(idControl, deleteCar);
+app.use(carRoutes());
 
 // dinlenicek portu belirle
 app.listen(PORT, () => {

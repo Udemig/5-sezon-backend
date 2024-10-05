@@ -1,0 +1,155 @@
+[
+  {
+    "id": "asdasdf34asda43242asd",
+    "recipeName": "Mercimek Çorbası",
+    "category": "Çorba",
+    "ingredients": [
+      "1 su bardağı kırmızı mercimek",
+      "1 adet soğan",
+      "1 adet havuç",
+      "1 adet patates",
+      "2 yemek kaşığı sıvı yağ",
+      "1 tatlı kaşığı tuz",
+      "Yarım çay kaşığı karabiber",
+      "1 tatlı kaşığı kırmızı biber",
+      "6 su bardağı su",
+      "1 limonun suyu"
+    ],
+    "instructions": [
+      "Mercimeği yıkayın ve süzün.",
+      "Soğanı doğrayın, havuç ve patatesi küçük küpler halinde kesin.",
+      "Sıvı yağı bir tencerede ısıtın, doğranmış soğanı ekleyin ve pembeleşene kadar kavurun.",
+      "Havuç ve patatesi ekleyip birkaç dakika daha kavurun.",
+      "Mercimeği ekleyin, suyu ekleyin ve kaynamaya bırakın.",
+      "Kaynadıktan sonra altını kısıp tencerenin kapağını kapatın, mercimekler iyice yumuşayana kadar pişirin.",
+      "Çorbayı blenderdan geçirin, tuz ve baharatları ekleyin.",
+      "Limon suyu ile servis yapın."
+    ],
+    "recipeTime": 30,
+    "servingSuggestion": "Mercimek çorbası, yanında taze ekmekle servis edilebilir.",
+    "image": "https://picsum.photos/501"
+  },
+  {
+    "id": "asdasda43242dsfgdfhg",
+    "recipeName": "Spagetti Bolognese",
+    "category": "Ana Yemek",
+    "ingredients": [
+      "400 gram spagetti",
+      "300 gram kıyma",
+      "1 adet soğan",
+      "2 diş sarımsak",
+      "1 kutu (400 gram) ezilmiş domates",
+      "2 yemek kaşığı domates salçası",
+      "1 tatlı kaşığı kurutulmuş kekik",
+      "1 tatlı kaşığı kurutulmuş fesleğen",
+      "Tuz ve karabiber, damak zevkine göre",
+      "Rendelenmiş parmesan peyniri garnitür için"
+    ],
+    "instructions": [
+      "Spagettiyi paket üzerindeki talimatlara göre haşlayın.",
+      "Bir tavada ince doğranmış soğanı ve ezilmiş sarımsağı yumuşayana kadar soteleyin.",
+      "Kıymayı ekleyin ve kahverengileşene kadar pişirin.",
+      "Ezilmiş domates, domates salçası, kekik, fesleğen, tuz ve karabiberi ekleyin.",
+      "Sosu 20-30 dakika kadar kaynatın, kıvam alana kadar pişirin.",
+      "Haşlanmış spagetti ile servis yapın, üzerine rendelenmiş parmesan peyniri serpin.",
+      "Spagetti Bolognese'nin tadını çıkarın!"
+    ],
+    "recipeTime": 45,
+    "servingSuggestion": "Spagetti Bolognese'yi sarımsaklı ekmek veya yeşillik salata ile servis edebilirsiniz.",
+    "image": "https://picsum.photos/500"
+  },
+  {
+    "id": "ajsd723jasd72jasd823",
+    "recipeName": "Karnıyarık",
+    "category": "Ana Yemek",
+    "ingredients": [
+      "5 adet patlıcan",
+      "300 gram kıyma",
+      "1 adet soğan",
+      "2 adet domates",
+      "2 adet yeşil biber",
+      "3 yemek kaşığı sıvı yağ",
+      "1 yemek kaşığı salça",
+      "1 tatlı kaşığı tuz",
+      "Yarım çay kaşığı karabiber",
+      "1 su bardağı su"
+    ],
+    "instructions": [
+      "Patlıcanları alacalı soyun ve ortadan yararak kızartın.",
+      "Soğanı ve biberi doğrayın, domatesleri küçük küpler halinde kesin.",
+      "Sıvı yağı bir tavada ısıtın, doğranmış soğanı ekleyip pembeleşene kadar kavurun.",
+      "Kıymayı ekleyin ve kavurmaya devam edin.",
+      "Biber ve domatesleri ekleyin, salçayı ilave edin ve karıştırın.",
+      "Tuz ve karabiberi ekleyin, biraz su ekleyerek harcı pişirin.",
+      "Kızartılmış patlıcanların içine harcı doldurun ve tepsiye dizin.",
+      "Üzerine su ekleyip 180 derecede önceden ısıtılmış fırında 20 dakika pişirin."
+    ],
+    "recipeTime": 60,
+    "servingSuggestion": "Karnıyarık, yanında pilav ve cacıkla servis edilebilir.",
+    "image": "https://picsum.photos/502"
+  },
+  {
+    "id": "hsjdkf82jasd728jashd",
+    "recipeName": "Şakşuka",
+    "category": "Meze",
+    "ingredients": [
+      "3 adet patlıcan",
+      "2 adet yeşil biber",
+      "2 adet kırmızı biber",
+      "3 adet domates",
+      "2 diş sarımsak",
+      "3 yemek kaşığı zeytinyağı",
+      "1 tatlı kaşığı tuz",
+      "Yarım çay kaşığı karabiber"
+    ],
+    "instructions": [
+      "Patlıcanları küp küp doğrayın ve tuzlu suda bekletin.",
+      "Biberleri doğrayın, domatesleri rendeleyin.",
+      "Patlıcanları yıkayıp kurulayın ve kızartın.",
+      "Zeytinyağını bir tavada ısıtın, doğranmış biberleri kavurun.",
+      "Rendelenmiş domatesleri ekleyin ve pişirin.",
+      "Kızarmış patlıcanları ekleyin, tuz ve karabiberi ilave edin.",
+      "Karışımı karıştırıp bir servis tabağına alın."
+    ],
+    "recipeTime": 40,
+    "servingSuggestion": "Şakşuka, üzerine yoğurt dökülerek servis edilebilir.",
+    "image": "https://picsum.photos/503"
+  },
+  {
+    "id": "js82jasdj823asdj823",
+    "recipeName": "Kısır",
+    "category": "Salata",
+    "ingredients": [
+      "2 su bardağı ince bulgur",
+      "1 demet taze soğan",
+      "1 demet maydanoz",
+      "1 adet salatalık",
+      "2 adet domates",
+      "3 yemek kaşığı zeytinyağı",
+      "1 yemek kaşığı nar ekşisi",
+      "1 tatlı kaşığı tuz",
+      "Yarım çay kaşığı karabiber",
+      "1 su bardağı sıcak su"
+    ],
+    "instructions": [
+      "Bulguru derin bir kaba alın ve üzerine sıcak suyu ekleyip kapağını kapatın.",
+      "Soğan, maydanoz, salatalık ve domatesi küçük küçük doğrayın.",
+      "Şişen bulguru karıştırın ve doğranmış malzemeleri ekleyin.",
+      "Zeytinyağı, nar ekşisi, tuz ve karabiberi ekleyip iyice karıştırın.",
+      "Servis tabağına alıp soğuk olarak servis yapın."
+    ],
+    "recipeTime": 20,
+    "servingSuggestion": "Kısır, marul yaprakları ile birlikte servis edilebilir.",
+    "image": "https://picsum.photos/504"
+  },
+  {
+    "recipeName": "Vişne Suyu",
+    "category": "İçecek",
+    "recipeTime": "14",
+    "servingSuggestion": "bardakta...\n",
+    "ingredients": ["vişne", "su"],
+    "instructions": ["vişneyi.."],
+    "image": "https://picsum.photos/576",
+    "id": "682b6aa3-6e61-443d-8dad-ff9963338e97"
+  }
+]
