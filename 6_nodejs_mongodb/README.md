@@ -103,6 +103,14 @@
 
 ## Authorization
 
+- Bir kullanıcının sistemin belirli kaynaklarına erişimini kontrol etme sürecidir.
+- Yetkilendirme, kimlik doğrulama sürecinden sınra uyguladığımız süreçtir.
+- Kimliğini doğruladığımız kullanıcnın eylemleri yapıp yapamayacağını belirleriz.
+- Örn:
+- getAllTours endpointine henüz oturum açmamış kullanıcılar bile erişebilmeli
+- createTour endpointe erişbilmek için hem oturumunun açık olmasını hemde yeterli rolünün olması gerekir
+- getTourStats endpointe erişbilmek için hem oturumunun açık olmasını hemde admin rolünün olması gerekir
+
 ## Şifre Değiştirme
 
 ## Mail Gönderme

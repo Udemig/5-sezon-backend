@@ -1,6 +1,7 @@
 const { Schema, default: mongoose } = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 // Kullanıcı Şeması
 const userSchema = new Schema({
@@ -51,6 +52,12 @@ const userSchema = new Schema({
     type: Boolean,
     default: true,
   },
+
+  passChangedAt: Date,
+
+  passResetToken: String,
+
+  passResetExpires: Date,
 });
 
 //? Veritbanına kullanıcıyı kaydetmeden önce:
@@ -69,12 +76,40 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+//? Veritbanına kullanıcıyı güncellemeden önce:
+//* eğer şifre değiştiyse şifre değişim tarihini güncelle
+userSchema.pre("save", function (next) {
+  // eğer şifre değişmediyse veya döküman yeni oluşturulduysa mw'i durdur sonraki adıma devam et
+  if (!this.isModified("password") || this.isNew) return next();
+
+  // şifre değiştiyse şifre değişim tarihini güncelle
+  // şifre değişminden hemen sonra jwt tokeni oluşturduğumuz için oluşturulma tarihi çakıimasın diye 1 saniye çıkarılım
+  this.passChangedAt = Date.now() - 1000;
+
+  next();
+});
+
 //? Sadece model üzerinden erişilebilen fonksiyon
 // normal şifre ile hesahlenmiş şifreyi karşılaştırsın
 userSchema.methods.correctPass = async function (pass, hashedPass) {
   // pass > Denem@123
   // hashedPass > $2b$12$N9BQoexMwICIptP7t5nMJOGqNGJB03qad38G19qe5tTZjOi0th.fi
   return await bcrypt.compare(pass, hashedPass);
+};
+
+// şifre sıfırlama tokeni oluşturan fonksiyon
+userSchema.methods.createResetToken = function () {
+  // 1) 32 byte'lık rastgele bir veri oluştur ve bunu hexadecimal bir diziye dönüştür
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  // 2) tokeni hashle ve veritbanına kaydet
+  this.passResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+  // 3) tokenin son geçerlilik tarihini veritbanına kaydet (10dk)
+  this.passResetExpires = Date.now() + 10 * 60 * 1000;
+
+  // 4) tokenin normal halini return et
+  return resetToken;
 };
 
 const User = mongoose.model("User", userSchema);
