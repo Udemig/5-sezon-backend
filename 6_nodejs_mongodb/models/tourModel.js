@@ -13,10 +13,10 @@ const tourSchema = new mongoose.Schema(
       type: String,
       unique: [true, "Bu tur ismi zaten mevcut"],
       required: [true, "Tur isim değerine sahip olmalı"],
-      validate: [
-        validator.isAlphanumeric, // third party validator
-        "Tur ismi özel karakter içermemeli",
-      ],
+      // validate: [
+      //   validator.isAlphanumeric, // third party validator
+      //   "Tur ismi özel karakter içermemeli",
+      // ],
     },
 
     price: {
@@ -90,6 +90,32 @@ const tourSchema = new mongoose.Schema(
     },
 
     durationHour: { type: Number },
+
+    // embedding
+    startLocation: {
+      description: String,
+      type: { type: String, default: "Point", enum: "Point" },
+      coordinates: [Number],
+      address: String,
+    },
+
+    // embedding
+    locations: [
+      {
+        description: String,
+        type: { type: String, default: "Point", enum: "Point" },
+        coordinates: [Number],
+        day: Number,
+      },
+    ],
+
+    // refferance
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId, // referans tanımında tip her zaman Object Id'di
+        ref: "User", // id'lerin hangi kolleksiyona ait olduğunu söyledik
+      },
+    ],
   },
   // şema ayarları
   {
@@ -135,6 +161,17 @@ tourSchema.post("updateOne", function (doc, next) {
 tourSchema.pre("find", function (next) {
   // premium olanlar her kullanıya göndermek istemidiğimizden yapıla sorgularda otomatik olarka premium olmayanları filtrelyelim
   this.find({ premium: { $ne: true } });
+
+  next();
+});
+
+//? Turlar veritbanında alınmaya çalışıldığında
+tourSchema.pre(/^find/, function (next) {
+  // yapılan sorgudan hesabı inaktif olanları kaldır
+  this.populate({
+    path: "guides",
+    select: "-password -__v -passResetToken -passResetExpires -passChangedAt",
+  });
 
   next();
 });

@@ -31,6 +31,7 @@ exports.createTour = c(async (req, res, next) => {
 });
 
 exports.getTour = c(async (req, res, next) => {
+  // id şeklinde olan user referanlsarını populate ile user verileriyle doldurduk
   const tour = await Tour.findById(req.params.id);
 
   // todo idli eleman bulunamazsa hata gönder

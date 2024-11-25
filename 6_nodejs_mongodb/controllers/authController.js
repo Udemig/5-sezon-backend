@@ -51,6 +51,8 @@ exports.signUp = c(async (req, res, next) => {
 exports.login = c(async (req, res, next) => {
   const { email, password } = req.body;
 
+  console.log(password);
+
   // 1) email ve şifre geldi mi kontrol et
   if (!email || !password) {
     return next(e(400, "Lüfen mail ve şifre giriniz"));

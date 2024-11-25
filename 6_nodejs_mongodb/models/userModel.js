@@ -89,6 +89,14 @@ userSchema.pre("save", function (next) {
   next();
 });
 
+//? Kullanıcı veritbanında alınmaya çalışıldığında
+userSchema.pre(/^find/, function (next) {
+  // yapılan sorgudan hesabı inaktif olanları kaldır
+  this.find({ active: { $ne: false } });
+
+  next();
+});
+
 //? Sadece model üzerinden erişilebilen fonksiyon
 // normal şifre ile hesahlenmiş şifreyi karşılaştırsın
 userSchema.methods.correctPass = async function (pass, hashedPass) {

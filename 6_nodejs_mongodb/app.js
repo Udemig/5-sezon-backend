@@ -4,12 +4,39 @@ const userRouter = require("./routes/userRoutes.js");
 const reviewRouter = require("./routes/reviewRoutes.js");
 const cookieParser = require("cookie-parser");
 const error = require("./utils/error.js");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const sanitize = require("express-mongo-sanitize");
+const hpp = require("hpp");
 
 // express uygulamsı oluştur
 const app = express();
 
-// middleware
-app.use(express.json());
+const limiter = rateLimit({
+  max: 10,
+  windowMs: 15 * 60 * 1000,
+  message:
+    "Kısa süre içerisinde çok fazla istekte bulundunuz. Lütfen daha sonra tekrar deneyin",
+});
+
+//! middleware
+
+// client'a gönderilen cevaba güvenlik amaçlı http headerları ekler
+app.use(helmet());
+
+// rate limit: aynı ip adresinden belirli bir süre içerisinde gelebilecek istek sınırını belirle
+app.use("/api", limiter);
+
+// client'tan gelen json versini js'e çevir (maks kota)
+app.use(express.json({ limit: "10kb" }));
+
+// (body/params/headers/query) alanlarında mongodb kodu tespit ettiği zaman boza
+app.use(sanitize());
+
+// hpp: parametre kirliliğini önler
+app.use(hpp());
+
+// client'tan gelen çerezleri işler
 app.use(cookieParser());
 
 // router'ları projeye tanıt

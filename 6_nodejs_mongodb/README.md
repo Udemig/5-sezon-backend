@@ -113,4 +113,117 @@
 
 ## Şifre Değiştirme
 
+- şifremi unuttum
+- şifreyi biliip değiştirme
+
 ## Mail Gönderme
+
+- nodemailer
+- mailtrap
+
+# Node.js API'ya Karşı Yapılabilecek Saldırı Türleri ve Alınabilecek Önlemler
+
+## Compromised Attack
+
+- Güçlü bir şekilde hashleme ve saltlama yapılmalıdır.
+- Şifrelenmiş şifre saklama tokenleri güvenli bir şekilde korunmalıdır.
+- Kullanıcıların güçlü şifreler yazmasını sağlayacak mekanizmalar kullanılmalıdır.
+
+## Brute Force Attack
+
+- Kullanıcıların güçlü şifreler yazması teşvik edilmelidir.
+- Deneme hakkı sınırlandırılmalıdır.
+- İstek hız limiti uygulanmalıdır.
+- CAPTCHA doğrulaması eklenmelidir.
+- İki faktörlü kimlik doğrulama kullanılmalıdır.
+- Belirli bir deneme sonrası hesap kilitlenebilir.
+
+## XSS (Cross-Site Scripting)
+
+- JWT tokenlerinin sadece HTTPS üzerinden seyahat edebilmesi sağlanmalıdır.
+- Özel HTTP header'ları eklenmelidir.
+- Input olarak gönderilen verilerin içinde JS kodu olmadığından emin olunmalıdır.
+- Zararlı URL parametreleri engellenmelidir.
+
+## DoS (Denial of Service) ve DDoS
+
+- Bir IP adresinden belirli bir süre içinde gelebilecek maksimum istek sayısı belirlenmelidir (rate limiting).
+- Güvenlik önlemleri olarak aşağıdakiler kullanılabilir:
+  - Firewall
+  - Load balancer
+- Anormal trafik tespiti yapan araçlar kullanılmalıdır (örneğin: Wireshark, Nagios, Splunk).
+
+## NoSQL / SQL Injection
+
+- Input ve parametre girdilerinin SQL veya NoSQL veritabanı komutları içermemesi sağlanmalıdır.
+- Girişlerin sanitizasyonu için uygun kütüphaneler kullanılmalıdır.
+
+## Genel Önlemler
+
+- Her zaman HTTPS kullanılmalıdır.
+- Tokenlerin geçerlilik süreleri belirlenmelidir.
+- Hata bilgileri detaylı bir şekilde frontend'e gönderilmemelidir.
+- Önemli işlemler öncesinde doğrulama yapılmalıdır.
+- Hesap oluştururken e-posta doğrulaması yapılmalıdır.
+
+# Data Modeling
+
+- Data modeling, veri yapılarının, kısıtlamalarını, ilişkilerinini ve diğer unsurları tanımladığımız sürece verilen isimdir. Bu süreç projenin ihtiyaçlarını karşılama adına veritabanı tasarımını planlamak için kullanılır. Amaç, karmaşık veri setlerinin daha anlaşılabilir, düzenli, erişlebilir bir şekilde organize edilmesini sağlamaktır.
+
+## Aşamalar
+
+1. Gereksinim Analizi
+
+- - Uygulanım hangi veirlerle çalışıcağı belirlenir
+- - Verilerin nasıl kullanılavağı ve hangi sorguların yapılacağı analiz edilir.
+
+2. Varlıkların Tanımlanması
+
+- - Veritabanında temsil edilecek nesneler belirlenir (Ürünler, Siparişler, Kullanılcılar)
+- - Her nesnenin özellikleri belirlenir (ad, eposta, şifre)
+
+3. İliişkilerin Tanımlanması
+
+- - Verilerin arasındaki işişkiler belirlenir (Sipariş nesneinde kullanıcı verisi olmalı)
+- - İlişki türleri belirlenir.
+- - - One To One
+- - - One To Many
+- - - Many To Many
+- - - Refferencing
+- - - Embedding
+
+4. Performans Optimizasyonu Ve Indeksleme
+
+- Sık yapılan sorgularda indeksleme yapılır.
+- Veri modeli sorgu performansını arttırcak şekilde optimize ederiz.
+
+# Veritabanı Modellerindeki İlişkiler
+
+- One to One (1:1): Bir kolleksiyondaki her bir kayıt diğer kolleksiyondaki tek bir kayıt ile ilişkilendirilir.
+
+- One to Many (1:many): Bir kolleksiyondaki her bir kayıt diğer kolleksiyondaki birden çok kayıt ile ilişkilendirilir.
+
+- Amny to Many (many:many): Bir kolleksiyondaki birden çok kayıt diğer kolleksiyondaki birden çok kayıt ile ilişkilendirilir.
+
+# Veriler Arasında Kurulan İlişkiler
+
+1. Refferancing (Referans) / Normalization:
+
+- Referans, belirli belegedeki veriler bir başka belgeye referans (id) kullanılarak ilişkilendirmeye yarar. Yani iki belge arasında ilişki vardır ancak gerçek veri bir belegede saklanırken diğer belgede sadece gerçek verinin referansı bulunur.
+
+2. Embedding (Gömme) / Denormalization:
+
+- Belirli belgenein içerisindeki verileri diğer belgelere doğrudan gömülü olarak tanımlamaya yarar
+
+# Hangi Durumda Hangisini Kullanıcaz
+
+----------------------------- Embedding --------------------------- Reffernecing ----------------------
+
+1. İlişki Tipi 1:FEW, 1:MANY, 1:1 1:MANY, 1:TON, MANY:MANY, 1:1
+
+2. Erişim Durumu Okuma daha yüksekse Yazma oranı yüksekse
+   veri çok değişmiyorsa veri çok güncelleniyorsa
+
+# Populate
+
+- `populate`, mongoose kullanarak bir mongodb belgesi sorguladığımızda, o belgenin içersinde referans olarak verilen başka bir kolleksiyondaki belgeleri otomoatik olarak doldurmamızı sağlayan yöntemdir. SQL'deki JOİN methoduyla benzer bir görev yapar. Referans olarak tanımladığımız idleri asıl veri kayıtlarıyla doldurur.
