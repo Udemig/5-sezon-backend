@@ -2,12 +2,12 @@ const User = require("../models/userModel");
 const c = require("../utils/catchAsync");
 const error = require("../utils/error");
 const filterObject = require("../utils/filterObject");
+const factory = require("./handlerFactory");
 
 // hesap bilgilerini güncelle
 exports.updateMe = c(async (req, res, next) => {
   // 1) şifreyi güncellemeye çalışırsa hata ver
-  if (req.body.password || req.body.passwordConfirm)
-    return next(error(400, "Şifreyi bu endpoint ile güncelleyemezsiniz"));
+  if (req.body.password || req.body.passwordConfirm) return next(error(400, "Şifreyi bu endpoint ile güncelleyemezsiniz"));
 
   // 2) isteğin body kısmından sadece izin verilen değerleri al
   const filtredBody = filterObject(req.body, ["name", "email", "photo"]);
@@ -27,22 +27,12 @@ exports.deleteMe = c(async (req, res, next) => {
   res.status(200).json({ message: "Hesabınız başarıyla kaldırıldı" });
 });
 
-exports.getAllUsers = c(async (req, res, next) => {
-  res.status(200).json("işlem başarılı");
-});
+exports.getAllUsers = factory.getAll(User);
 
-exports.createUser = c(async (req, res, next) => {
-  res.status(200).json("işlem başarılı");
-});
+exports.createUser = factory.createOne(User);
 
-exports.getUser = c(async (req, res, next) => {
-  res.status(200).json("işlem başarılı");
-});
+exports.getUser = factory.getOne(User);
 
-exports.updateUser = c(async (req, res, next) => {
-  res.status(200).json("işlem başarılı");
-});
+exports.updateUser = factory.updateOne(User);
 
-exports.deleteUser = c(async (req, res, next) => {
-  res.status(200).json("işlem başarılı");
-});
+exports.deleteUser = factory.deleteOne(User);

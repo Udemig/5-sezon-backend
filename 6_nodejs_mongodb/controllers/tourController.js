@@ -2,56 +2,17 @@ const Tour = require("../models/tourModel.js");
 const APIFeatures = require("../utils/apiFeatures.js");
 const e = require("../utils/error.js");
 const c = require("../utils/catchAsync.js");
+const factory = require("./handlerFactory.js");
 
-exports.getAllTours = c(async (req, res, next) => {
-  // class'tan örnek al (geriye sorguyu oluşturup döndürüyo)
-  const features = new APIFeatures(Tour.find(), req.query, req.formattedQuery)
-    .filter()
-    .limit()
-    .sort()
-    .pagination();
+exports.getAllTours = factory.getAll(Tour);
 
-  // sorguyu çalıştır
-  const tours = await features.query;
+exports.createTour = factory.createOne(Tour);
 
-  // client'a veritbanından gelen verileri gönder
-  res.json({
-    message: "getAllTours başarılı",
-    results: tours.length,
-    tours,
-  });
-});
+exports.getTour = factory.getOne(Tour, "reviews");
 
-exports.createTour = c(async (req, res, next) => {
-  // veirtbanına yeni turu kaydet
-  const newTour = await Tour.create(req.body);
+exports.updateTour = factory.updateOne(Tour);
 
-  // client'a cevap gönder
-  res.json({ text: "createTour başarılı", tour: newTour });
-});
-
-exports.getTour = c(async (req, res, next) => {
-  // id şeklinde olan user referanlsarını populate ile user verileriyle doldurduk
-  const tour = await Tour.findById(req.params.id);
-
-  // todo idli eleman bulunamazsa hata gönder
-
-  res.json({ text: "getTour başarılı", tour });
-});
-
-exports.deleteTour = c(async (req, res, next) => {
-  await Tour.deleteOne({ _id: req.params.id });
-
-  res.status(204).json({});
-});
-
-exports.updateTour = c(async (req, res, next) => {
-  const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-
-  res.json({ text: "updateTour başarılı", tour });
-});
+exports.deleteTour = factory.deleteOne(Tour);
 
 // istek parametrelerini frontendin oluşrutması yerine bu mw ile biz tanımlıyıcaz
 exports.aliasTopTours = (req, res, next) => {

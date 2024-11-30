@@ -13,10 +13,9 @@ const hpp = require("hpp");
 const app = express();
 
 const limiter = rateLimit({
-  max: 10,
+  max: 100,
   windowMs: 15 * 60 * 1000,
-  message:
-    "Kısa süre içerisinde çok fazla istekte bulundunuz. Lütfen daha sonra tekrar deneyin",
+  message: "Kısa süre içerisinde çok fazla istekte bulundunuz. Lütfen daha sonra tekrar deneyin",
 });
 
 //! middleware

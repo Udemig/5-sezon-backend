@@ -125,6 +125,13 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+//! Virtual Populate
+tourSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id", // review dökümanınındaki "tour" alanının tour dökümandaki karşılığı olan alan
+  foreignField: "tour", // tour dökümandaki "_id" alanının yorum dökümanındaki karşılığı
+});
+
 //! Virtual Property
 // Örn: Şuan veritbanında turların fiyatlarını ve indirim fiyatını tutuyoruz ama frontend bizden ayrıca indirimli fiyarıda istedi. Bu noktada indirimli fiyatı veritabanında tutmak gereksiz maaliyet olur. Bunun yerine cevap gönderme sırasında bu değeri hesaplyıp eklersek hem frontend'in ihtiyacını karşılamış oluruz hemde veritbanıdna gereksiz yer kaplamaz
 tourSchema.virtual("discountedPrice").get(function () {
