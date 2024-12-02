@@ -49,7 +49,10 @@ const tourSchema = new mongoose.Schema(
 
     maxGroupSize: {
       type: Number,
-      required: [true, "Tur maksimum kişi sayısı değerine sahip olmalı"],
+      required: [
+        true,
+        "Tur maksimum kişi sayısı değerine sahip olmalı",
+      ],
     },
 
     ratingsAverage: {
@@ -177,7 +180,8 @@ tourSchema.pre(/^find/, function (next) {
   // yapılan sorgudan hesabı inaktif olanları kaldır
   this.populate({
     path: "guides",
-    select: "-password -__v -passResetToken -passResetExpires -passChangedAt",
+    select:
+      "-password -__v -passResetToken -passResetExpires -passChangedAt",
   });
 
   next();
@@ -187,10 +191,18 @@ tourSchema.pre(/^find/, function (next) {
 // Rapot oluşturma işlemlerinden önce veya sonra çalıştırdğımız middleware'lerdir.
 tourSchema.pre("aggregate", function (next) {
   // premium olan turları rapora dahil etmesin
-  this.pipeline().unshift({ $match: { premium: { $ne: true } } });
+  this.pipeline().push({ $match: { premium: { $ne: true } } });
 
   next();
 });
+
+//! Index
+// Kolleksiyonların belirli alanlara göre sıralanmış bir kopyasını tutar.
+// Avantaj: Hangi alana göre sıraladıysam o alana göre yapılan filtreleme ve sıralama işlemlerinde daha hızlı cevap.
+// Dezavantaj: Oluşturulan her index veritabanında yer kaplar | Ekstra Maliyet | Yazma İşlemlerinde Yavaş
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+
+tourSchema.index({ startLocation: "2dsphere" });
 
 // şemayı kullanrak model oluşturuyoruz
 const Tour = mongoose.model("Tour", tourSchema);

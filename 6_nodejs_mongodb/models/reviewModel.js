@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const Tour = require("./tourModel");
 
 const reviewSchema = new Schema(
   {
@@ -56,10 +57,31 @@ reviewSchema.statics.calcAverage = async function (tourId) {
     ],
   ]);
 
-  console.log(stats);
+  // eğer tura atılan yorum varsa hesaplanan istatistikleri tur belgesine kayder
+  if (stats.length > 0) {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsAverage: stats[0].avgRating,
+      ratingsQuantity: stats[0].nRating,
+    });
+  } else {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsAverage: 4,
+      ratingsQuantity: 0,
+    });
+  }
 };
 
-// todo her yeni yorum atıldığında / silindiğinde / güncellendiğinde yukarıdaki methodu çalıştırıp güncel rating değerlini alıp tour belgesini güncelle
+//todo bir kullanıcının aynı tura birden fazla yorum atamasını engelle
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
+// her yeni yorum atıldığında / silindiğinde / güncellendiğinde yukarıdaki methodu çalıştırıp güncel rating değerlerini hesapla tour belgesini güncelle
+reviewSchema.post("save", function () {
+  Review.calcAverage(this.tour);
+});
+
+reviewSchema.post(/^findOneAnd/, function (document) {
+  Review.calcAverage(document.tour);
+});
 
 const Review = model("Review", reviewSchema);
 

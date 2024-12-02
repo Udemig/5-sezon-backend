@@ -7,18 +7,34 @@ const factory = require("./handlerFactory");
 // hesap bilgilerini güncelle
 exports.updateMe = c(async (req, res, next) => {
   // 1) şifreyi güncellemeye çalışırsa hata ver
-  if (req.body.password || req.body.passwordConfirm) return next(error(400, "Şifreyi bu endpoint ile güncelleyemezsiniz"));
+  if (req.body.password || req.body.passwordConfirm)
+    return next(
+      error(400, "Şifreyi bu endpoint ile güncelleyemezsiniz")
+    );
+
+  // todo resme eriş
+  console.log(req);
 
   // 2) isteğin body kısmından sadece izin verilen değerleri al
-  const filtredBody = filterObject(req.body, ["name", "email", "photo"]);
+  const filtredBody = filterObject(req.body, [
+    "name",
+    "email",
+    "photo",
+  ]);
 
   // 3) kullanıcı bilgilerini güncelle
-  const updated = await User.findByIdAndUpdate(req.user.id, filtredBody, {
-    new: true,
-  });
+  const updated = await User.findByIdAndUpdate(
+    req.user.id,
+    filtredBody,
+    {
+      new: true,
+    }
+  );
 
   // 4) client'a cevap gönder
-  res.status(200).json({ message: "Bilgileriniz başarıyla güncellendi", updated });
+  res
+    .status(200)
+    .json({ message: "Bilgileriniz başarıyla güncellendi", updated });
 });
 
 exports.deleteMe = c(async (req, res, next) => {

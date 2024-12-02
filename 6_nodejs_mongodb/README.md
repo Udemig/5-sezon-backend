@@ -227,3 +227,36 @@
 # Populate
 
 - `populate`, mongoose kullanarak bir mongodb belgesi sorguladığımızda, o belgenin içersinde referans olarak verilen başka bir kolleksiyondaki belgeleri otomoatik olarak doldurmamızı sağlayan yöntemdir. SQL'deki JOİN methoduyla benzer bir görev yapar. Referans olarak tanımladığımız idleri asıl veri kayıtlarıyla doldurur.
+
+# Index
+
+- `index`, veritabanındaki verileri daha hızlı sorgulamak için kullanılan bir yapıdır. İndeksler, bir kolleksiyonda yer alan belirli alanlara göre verilerin sıralı bir şekilde depolanmasını sağlar.
+
+- Verilerin sıralı şekilde depolanmış olması sorguların hızını arttırır.
+
+# Medya Depolama
+
+## 1.Yol - Dosya Sistemi Üzerinden Sunucuda Depolama
+
+- Avantaj:
+- - Basit ve Kolay
+- - Düşük Maliyet
+- - Kontrol Tamamen Bizde
+- - Hız: Sunucu ile dosyalar aynı yerel ağda olduğu için dosya erişimi daha hızlı olur
+
+- Dezavantaj:
+- - Ölçeklenemiyor
+- - Bakım: Yedeklemesi vs. bizim sorumluluğumuzda olduğu için arıza durumunda veri kaybedebiliriz.
+- - Dağıtık erişim yok
+
+## 2.Yol - Bulut Depolama (Amazon S3, Google Cloud, Firebase Storage...)
+
+- Avantaj:
+- - Güvenlik
+- - Ölçeklenebilir
+- - Bakım
+- - Dağıtık erişim var
+
+- Dezavantaj:
+- - MAALİYET
+- - Bağımlılık

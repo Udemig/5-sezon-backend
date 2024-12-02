@@ -49,7 +49,9 @@ exports.getTourStats = c(async (req, res, next) => {
     { $match: { avgPrice: { $gte: 500 } } },
   ]);
 
-  return res.status(200).json({ message: "Rapor Oluşturuldu", stats });
+  return res
+    .status(200)
+    .json({ message: "Rapor Oluşturuldu", stats });
 });
 
 // rapor oluşturup göndericek:
@@ -111,4 +113,74 @@ exports.getMonthlyPlan = c(async (req, res, next) => {
     message: `${year} yılı için aylık plan oluşturuldu`,
     stats,
   });
+});
+
+// belirli koordinatlardaki turları filtrele
+exports.getToursWithin = c(async (req, res, next) => {
+  // parametrelere eriş
+  const { distance, latlng, unit } = req.params;
+
+  // enlem ve boylamı değişkene aktar
+  const [lat, lng] = latlng.split(",");
+
+  // merkez noktası gönderilmediyse hata fırlat
+  if (!lat || !lng)
+    return next(e(400, "Lütfen merkez noktasını belirleyin"));
+
+  const radius =
+    unit === "mi" ? distance / 3963.2 : distance / 6378.1;
+
+  // belirlenen dairesel alandaki turları filtrele
+  const tours = await Tour.find({
+    startLocation: {
+      $geoWithin: {
+        $centerSphere: [[lat, lng], radius],
+      },
+    },
+  });
+
+  // clienta cevap gönder
+  res.status(200).json({
+    message: "Sınırlar içerisindeki turlar alındı",
+    tours,
+  });
+});
+
+// turların kullanıcıdan uzaklıklarını hesapla
+exports.getDistances = c(async (req, res, next) => {
+  // urldeki parametrelere eriş
+  const { latlng, unit } = req.params;
+
+  // enlem boylamı ayır
+  const [lat, lng] = latlng.split(",");
+
+  // enlem veya boylam yoksa hata fırlat
+  if (!lat || !lng)
+    return next(e(400, "Lütfen merkez noktayı tanımlayın"));
+
+  // unit'e göre radyanı doğru formata çevirmek için kaçla çarpılmalı
+  const multiplier = unit === "mi" ? 0.000621371192 : 0.001;
+
+  // turların merkez noktadan uzaklıklarını hesapla
+  const distances = await Tour.aggregate([
+    // 1) uzaklığı hesapla
+    {
+      $geoNear: {
+        near: { type: "Point", coordinates: [+lat, +lng] },
+        distanceField: "distance",
+        distanceMultiplier: multiplier,
+      },
+    },
+    //2) nesneden istediğimiz değerleri seç
+    {
+      $project: {
+        name: 1,
+        distance: 1,
+      },
+    },
+  ]);
+
+  res
+    .status(200)
+    .json({ message: "Uzaklıklar hesaplandı", distances });
 });
