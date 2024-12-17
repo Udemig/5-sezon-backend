@@ -1,14 +1,17 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
+
+// todo hizmet veileri için hem şema hem de interaface oluştur
 
 // bir belgenin tipi
 export interface IGig {
-  name: string;
+  user: Types.ObjectId;
 }
 
 // şema oluştur
 const gigSchema = new Schema<IGig>({
-  name: {
-    type: String,
+  user: {
+    type: Schema.ObjectId,
+    ref: "User",
   },
 });
 
