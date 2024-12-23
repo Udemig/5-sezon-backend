@@ -1,14 +1,4 @@
-type Props = {
-  label: string;
-  name: string;
-  required?: boolean;
-  disabled?: boolean;
-  type?: "text" | "email" | "password" | "number" | "file" | "textarea";
-  min?: number;
-  max?: number;
-  placeholder?: string;
-  isMulti?: boolean;
-};
+import { IInput } from "../../types";
 
 const Input = ({
   label,
@@ -19,8 +9,8 @@ const Input = ({
   required = false,
   max,
   min,
-  isMulti,
-}: Props) => {
+  multiple,
+}: IInput) => {
   return (
     <div className="mb-5">
       <label className="mb-2 text-sm font-medium text-gray-900" htmlFor={name}>
@@ -43,7 +33,7 @@ const Input = ({
           max={max}
           name={name}
           type={type}
-          multiple={isMulti}
+          multiple={multiple}
           required={required}
           disabled={disabled}
           placeholder={placeholder}

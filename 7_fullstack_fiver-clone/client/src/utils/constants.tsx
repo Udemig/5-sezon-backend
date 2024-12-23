@@ -9,7 +9,7 @@ import {
   FaBriefcase,
   FaUserTie,
 } from "react-icons/fa";
-import { ICategory, IInfo } from "../types";
+import { ICategory, IInfo, IInput } from "../types";
 
 export const categories: ICategory[] = [
   { name: "Programlama ve Teknoloji", icon: <FaCode /> },
@@ -42,48 +42,67 @@ export const items: IInfo[] = [
   },
 ];
 
-export const inputs = [
-  { label: "Başlık", name: "title", isReq: true },
-
-  { label: "Kapak Fotoğrafı", name: "cover", isReq: true, type: "file" },
-
+export const inputs: IInput[] = [
+  {
+    label: "Başlık",
+    name: "title",
+    required: true,
+  },
+  {
+    label: "Kapak Fotoğrafı",
+    name: "coverImage",
+    required: true,
+    type: "file",
+  },
   {
     label: "Fotoğraflar",
     name: "images",
+    required: true,
     type: "file",
-    isReq: true,
-    isMulti: true,
+    multiple: true,
   },
   {
-    label: "Revizyon Hakkı",
-    name: "revisionNumber",
+    label: "Revizyon Sayısı",
+    name: "package_revisions",
+    required: true,
     type: "number",
-    isReq: true,
     min: 1,
   },
-
   {
     label: "Özellikler (',' ile ayırınız)",
-    name: "features",
+    name: "package_features",
+    required: true,
     type: "textarea",
   },
-  { label: "Açıklama", name: "desc", isReq: true, type: "textarea" },
-  { label: "Yan Açıklama", name: "shortDesc", isReq: true },
-  { label: "Yan Başlık", name: "shortTitle", isReq: true },
-
+  {
+    label: "Açıklama",
+    name: "description",
+    required: true,
+    type: "textarea",
+  },
+  {
+    label: "Paket Açıklaması",
+    name: "package_description",
+    required: true,
+  },
+  {
+    label: "Paket Başlığı",
+    name: "package_title",
+    required: true,
+  },
   {
     label: "Teslimat Süresi (gün)",
-    name: "deliveryTime",
+    name: "package_duration",
+    required: true,
     type: "number",
-    isReq: true,
     min: 1,
     max: 90,
   },
   {
     label: "Fiyat ($)",
-    name: "price",
+    name: "package_price",
     type: "number",
-    isReq: true,
+    required: true,
     min: 1,
   },
 ];
