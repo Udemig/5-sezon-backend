@@ -62,12 +62,12 @@ export interface IGig {
   reviewCount: number;
   starCount: number;
   coverImage: string;
-  images: [string];
+  images: string[];
   category: string;
   package_title: string;
   package_description: string;
   package_price: number;
-  package_features: [string];
+  package_features: string[];
   package_duration: number;
   package_revisions: number;
   createdAt: string;

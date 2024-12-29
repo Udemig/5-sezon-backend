@@ -18,7 +18,7 @@ const Detail = () => {
   });
 
   return (
-    <div>
+    <div className="overlow-hidden">
       {isLoading ? (
         <Loader designs="my-20 size-8" />
       ) : error ? (
@@ -26,14 +26,13 @@ const Detail = () => {
       ) : (
         data && (
           <div className="flex flex-col lg:flex-row gap-10">
-            <div>
+            <div className="overflow-y-auto">
               <BreadCrumb category={data.category} />
               <GigInfo gig={data} />
               <UserInfo user={data.user} />
             </div>
 
-            {/* todo */}
-            <PackageInfo />
+            <PackageInfo data={data} />
           </div>
         )
       )}

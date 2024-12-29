@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import reviewRouter from "./routes/review.routes.ts";
 import gigRouter from "./routes/gig.routes.ts";
 import authRouter from "./routes/auth.routes.ts";
 import errorMiddleware from "./middleware/errorHandler.ts";
@@ -27,7 +26,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true,
   })
@@ -36,7 +35,6 @@ app.use(
 // route'lar
 app.use("/api/auth", authRouter);
 app.use("/api/gigs", gigRouter);
-app.use("/api/reviews", reviewRouter);
 
 // hata yönetimi için mw
 app.use(errorMiddleware);

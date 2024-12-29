@@ -7,6 +7,8 @@ import Footer from "./components/footer";
 import Search from "./pages/search/index";
 import Create from "./pages/create";
 import Detail from "./pages/detail";
+import MyGigs from "./pages/my-gigs";
+import Protected from "./components/protected";
 
 const App = () => {
   return (
@@ -19,8 +21,13 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/add-gig" element={<Create />} />
           <Route path="/detail/:id" element={<Detail />} />
+
+          {/* sadece satıcı hesapları girebilmeli */}
+          <Route element={<Protected />}>
+            <Route path="/add-gig" element={<Create />} />
+            <Route path="/my-gigs" element={<MyGigs />} />
+          </Route>
         </Routes>
       </div>
 
