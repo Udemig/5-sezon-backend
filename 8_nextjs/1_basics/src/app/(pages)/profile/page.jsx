@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Profilini Görüntüle",
+  description: "Profil bilgilerin bu sayfada yer alır",
+};
+
 const Profile = () => {
   return (
     <div className="page">
