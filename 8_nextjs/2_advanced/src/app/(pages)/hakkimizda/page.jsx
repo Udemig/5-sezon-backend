@@ -1,11 +1,26 @@
+"use client";
+
+import { notFound, redirect } from "next/navigation";
 import Input from "./input";
+import Form from "next/form";
+
+const make = async (params) => {
+  console.log(params);
+};
 
 const Page = () => {
-  console.log("Hakkımızda render oldu");
+  // notFound();
+  // redirect("/gallery");
 
   return (
     <div className="p-10 text-3xl text-center my-20 border border-blue-500 ">
       <h1>Hakkımızda Sayfası</h1>
+
+      <Form action="/search">
+        <input name="query" type="text" />
+
+        <button type="submit">Gönder</button>
+      </Form>
 
       <Input />
 

@@ -39,3 +39,92 @@
 - Next.js bizden olabildiğince çok server component kullanamamızı ister. (Hız - Seo)
 
 - Her component'ı server component yapamıyoruz. Kullanıcı etkileşimi gerektiren component'lar mecburen client comp olmalı. React hook'larını kulladığımız comp'lar client comp olmalıdır.
+
+# Data Fetching
+
+- Next.js çekilen veriyi belirli bir süre boyunca cache'de tutar ve veriyi çeken fonksiyonu belirli bir süre içerisinde tekrar çalıştırığımızda api'dan veriyi almak yerine önceki istekten gelen ve cachede tutulan veriyi alır.
+
+- Bu sayede:
+- - api'dan cevap beklemek gerekemez > daha hızlı
+- - api'a gereksiz istek gitmez > daha az maliyetli
+
+- Cache özelliği sayesinde api'dan gelen veriyi birden fazla sayfa veya bileşende kullanmak istiyorsak redux/context yapılarına gerek duymadan bütün bileşenlerden api isteği atabiliriz.
+
+# Next.js Methodları
+
+## useRouter
+
+- Sadece `client` component'larda kullanılır.
+- Proje içerisinde yönlendirme yapmak için kullanılır.
+- back() | forward() | refresh() | push() | methodları vardır
+
+## redirect
+
+- Sadece `server` component'larda kullanılır.
+- Yönlendirme yapmak için kullanılır.
+
+## notFound
+
+- Hem `client` hemde `server` component'larda kullanılır.
+- 404 sayfasını ekrana basmak için kullanılır
+
+## usePathname
+
+- Sadece `client` component'larda kullanılır.
+- Kullanıcı bulunduğu yolu url'de alır ve döndürür.
+
+## useParams
+
+- Sadece `client` component'larda kullanılır.
+- urldeki path parametlerini alır ve dönrürür.
+
+## useSearchParams
+
+- Sadece `client` component'larda kullanılır.
+- urldeki arama parametlerini alır ve dönrürür.
+
+## generateStaticParams
+
+- Next.js 13 ve sonrasında App router ile birlikte kullanılır.
+- Dinamik sayların statik olarak oluşturulmasını sağlar.
+- generateStaticParams, build sırasında çağrılan dinamik rotalar için statik bir paramatre listesi döndürür. Next.js'de bu listedeki herbir parametre için o detay sayfasının statik bir versiyonunu oluşturur.
+
+- generateStaticParams() > [{id:1},{id:2},{id:3}]
+- yukarıdaki dizideki her bir id değeri için detay sayfasının statik bir versiyonu oluşturulur
+- Sadece dinamik sayfalarda kullanılır.
+
+## Form
+
+- Kullanıcının arattığı kelimeyi urle parametre olarka ekler aynı zamanda kullanıcyı /search adresine yönlendirir
+
+```html
+<form action="/search">
+  <input name="query" type="text" />
+
+  <button type="submit">Gönder</button>
+</form>
+```
+
+# BACKEND
+
+## Server Action
+
+- Client ve Server componentları içerisinde doğrudan backend kodu (User.findByIdAndDelete()) çalıştırmak istersek kullanırız.
+
+- Server tarafında yazılan kodu frontend tarfında yazabilmek için server componentlar backend kodunun yazılcağı fonksiyonun üstüne `use server` client componentlarda ise dosyanın en üstüne `use server` ibaresi eklereye backend kodlarını componentlar içersiinde yazabiliyoruz
+
+## Backend Routing
+
+- Backend'de routing kavramı endpoint tanımlamaya denk gelir:
+
+- GET /products > ürünleri verir
+- GET /products/[id] > ürün detayını verir
+- GET /users > kullanıcı veilerini veirir
+- POST /users > yeni kullanıcı ekler
+
+- Next.js'de backend yollarınıda frontend'de tanımladığımız gibi klasör yapısı aracılığı ile tanımlayabiliyoruz.
+
+- Öncelikle bir api klasörü oluşturmalyız.
+- api klasörünün içerisinde oluşturuğumuz ve içerisinde `route.js` dosyası olan her klasör bir endpoint tanımına denk gelir
+
+- Route.js dosyalarında hangi HTTP isteklerine cevap vericeksek o `HTTP methodu isminde bir fonksiyon` yazılır

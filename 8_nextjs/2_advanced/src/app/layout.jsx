@@ -1,4 +1,8 @@
 import "./globals.css";
+
+// Local fontların kurulu için import
+import localFont from "next/font/local";
+
 // Google fonts'daki fontu import et
 import { Playwrite_AU_SA } from "next/font/google";
 
@@ -8,7 +12,12 @@ const playwrite = Playwrite_AU_SA({
   subsets: ["latin"],
 });
 
-// TODO Local Fontlar
+// Local Font kurulumu
+const nasa = localFont({
+  src: "./assets/nasa.otf",
+  variable: "--font-nasa",
+  weight: "100 900",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -18,7 +27,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`antialiased ${playwrite.className}`}>{children}</body>
+      <body style={nasa.style} className={`antialiased ${nasa.className}`}>
+        {children}
+      </body>
     </html>
   );
 }
