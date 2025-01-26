@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaHeart, FaBell } from "react-icons/fa";
@@ -6,7 +7,9 @@ import { RiSettings4Fill as Settings } from "react-icons/ri";
 const Header: React.FC = () => {
   return (
     <header className="bg-white flex justify-between items-center py-5 px-7 lg:py-8 lg:px-10">
-      <h1 className="text-basic-blue font-bold text-2xl lg:text-4xl">DRIVE</h1>
+      <Link href="/" className="text-basic-blue font-bold text-2xl lg:text-4xl">
+        DRIVE
+      </Link>
 
       <form className="flex gap-2 py-2 px-4 rounded-full border border-zinc-300 md:w-2/4">
         <button className="text-zinc-700 text-xl">

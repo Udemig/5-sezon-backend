@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/stripe": "^8.0.417",
     "millify": "^6.1.0",
     "mongoose": "^8.9.5",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-icons": "^5.4.0"
+    "react-icons": "^5.4.0",
+    "stripe": "^17.5.0"
   },
   "devDependencies": {
     "@types/node": "^20",

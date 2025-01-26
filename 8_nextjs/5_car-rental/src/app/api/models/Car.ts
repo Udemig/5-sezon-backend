@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 export interface ICar {
-  id: string;
+  _id: string;
   make: string;
   model: string;
   year: number;

@@ -4,6 +4,8 @@ import { FaGasPump as Gas } from "react-icons/fa";
 import { TbSteeringWheelFilled as Steering } from "react-icons/tb";
 import { BsFillPeopleFill as People } from "react-icons/bs";
 import Image from "next/image";
+import generateImage from "@/app/utils/generateImage";
+import Link from "next/link";
 
 type Props = {
   car: ICar;
@@ -31,9 +33,7 @@ const Card: FC<Props> = ({ car }) => {
       <div className="max-md:flex max-md:justify-between max-md:gap-10">
         <div className="w-full h-[200px] relative">
           <Image
-            src={
-              "https://cdn.imagin.studio/getimage?customer=hrjavascript-mastery&make=Toyota&modelFamily=Corolla&randomPaint=true&zoomType=fullscreen&position=center&angle=05"
-            }
+            src={generateImage(car.make, car.model)}
             alt={car.model}
             fill
             className="object-contain"
@@ -59,9 +59,12 @@ const Card: FC<Props> = ({ car }) => {
           <span className="text-zinc-500 ps-1">gün</span>
         </p>
 
-        <button className="bg-basic-blue py-2 px-4 rounded-md hover:brightness-90 transition">
+        <Link
+          href={`/car/${car._id}`}
+          className="bg-basic-blue py-2 px-4 rounded-md hover:brightness-90 transition"
+        >
           Aracı Kirala
-        </button>
+        </Link>
       </div>
     </div>
   );
