@@ -16,7 +16,7 @@ const Home: React.FC = async () => {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {cars.map((car) => (
-          <Card key={car.id} car={car} />
+          <Card key={car._id} car={car} />
         ))}
       </div>
     </div>

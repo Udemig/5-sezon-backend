@@ -27,3 +27,15 @@ export const getCar = async (id: string): getCarRes => {
 
   return res.json();
 };
+
+// araç ödeme oturumu oluştur
+export const getPaymentUrl = async (car: ICar): Promise<string> => {
+  const res = await fetch(`http://localhost:3000/api/checkout`, {
+    method: "POST",
+    body: JSON.stringify(car),
+  });
+
+  const data = await res.json();
+
+  return data.url;
+};
