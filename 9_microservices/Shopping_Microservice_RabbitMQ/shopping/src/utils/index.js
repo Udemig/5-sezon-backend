@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-const { APP_SECRET } = require("../config");
+const amqplib = require("amqplib");
+const { APP_SECRET, MESSAGE_BROKER_URL, EXCHANGE_NAME, SHOPPING_BINDING_KEY, QUEUE_NAME } = require("../config");
 
 //Utility functions
 module.exports.GenerateSalt = async () => {
@@ -46,12 +46,55 @@ module.exports.FormateData = (data) => {
   }
 };
 
-// customer api'ına haber ver
-module.exports.PublishCustomerEvent = (payload) => {
-  axios.post("http://localhost:8000/customer/app-events", { payload });
+//--------------- RabbitMQ Methodları --------------//
+
+//! kanal oluştur
+module.exports.CreateChannel = async () => {
+  try {
+    // Rabbit mq sunucusu ile bağlantı kur
+    const connection = await amqplib.connect(MESSAGE_BROKER_URL);
+
+    // Bir iletişim kanalı oluştur
+    const channel = await connection.createChannel();
+
+    // Kanala gelen mesajları kuyruklara dağıtıcak olan exchange'i oluştur
+    channel.assertExchange(EXCHANGE_NAME, "direct", false);
+
+    // kanalı return et
+    return channel;
+  } catch (error) {
+    throw error;
+  }
 };
 
-// users api'ına haber ver
-module.exports.PublishUserEvent = (payload) => {
-  axios.post("http://localhost:8000/user/app-events", { payload });
+//! mesaj yayınla
+module.exports.PublishMessage = async (channel, key, message) => {
+  try {
+    await channel.publish(EXCHANGE_NAME, key, Buffer.from(message));
+    console.log("🏸 Mesaj kuyuruğa gönderildi");
+  } catch (error) {
+    throw error;
+  }
+};
+
+//! mesajlara abone ol
+module.exports.SubscribeMessage = async (channel, service) => {
+  // bir kuyruk oluştur
+  const appQueue = channel.assertQueue(QUEUE_NAME);
+
+  // kuyruğu belirli bir routing key bağla
+  channel.bindQueue(appQueue.queue, EXCHANGE_NAME, SHOPPING_BINDING_KEY);
+
+  // kuyruktaki mesajlara abone ol
+  channel.consume(
+    appQueue.queue,
+    (msg) => {
+      if (msg.content) {
+        console.log("Kuyruktan mesaj alındı 🥶");
+
+        service.SubscribeEvents(JSON.parse(msg.content.toString()));
+      }
+    },
+    { noAck: true } // mesaj gelince rabbitMq'ya onay gönder (kuyruktan mesaj kaldırılıyor)
+  );
 };

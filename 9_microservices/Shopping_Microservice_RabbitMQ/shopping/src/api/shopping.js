@@ -1,9 +1,13 @@
+const { SubscribeMessage, PublishMessage } = require("../utils");
 const ShoppingService = require("../services/shopping-service");
-const { PublishCustomerEvent } = require("../utils");
+const { CUSTOMER_BINDING_KEY } = require("../config");
 const UserAuth = require("./middlewares/auth");
 
-module.exports = (app) => {
+module.exports = (app, channel) => {
   const service = new ShoppingService();
+
+  // diğer servislerden gelen mesajlara abone ol
+  SubscribeMessage(channel, service);
 
   app.post("/order", UserAuth, async (req, res, next) => {
     const { _id } = req.user;
@@ -15,8 +19,8 @@ module.exports = (app) => {
       // customer servisine sipariş haberi verz kullanıcı verisine ürünler eklensin
       const payload = service.GetOrderPayload(_id, data, "CREATE_ORDER");
 
-      //customer servisine haber gönder
-      PublishCustomerEvent(payload.data);
+      // rabbit mq ile mesaj gönder
+      await PublishMessage(channel, CUSTOMER_BINDING_KEY, JSON.stringify(payload.data));
 
       return res.status(200).json(data);
     } catch (err) {

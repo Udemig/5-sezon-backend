@@ -1,8 +1,9 @@
+const { SHOPPING_BINDING_KEY, CUSTOMER_BINDING_KEY } = require("../config");
 const ProductService = require("../services/product-service");
-const { PublishCustomerEvent, PublishShoppingEvent } = require("../utils");
 const UserAuth = require("./middlewares/auth");
+const { PublishMessage } = require("../utils");
 
-module.exports = (app) => {
+module.exports = (app, channel) => {
   const service = new ProductService();
 
   app.post("/product/create", async (req, res, next) => {
@@ -61,9 +62,10 @@ module.exports = (app) => {
     const { _id } = req.user;
 
     try {
-      const data = await service.GetProductsPayload(_id, { productId: req.body._id, qty: 1 }, "ADD_TO_WISHLIST");
+      const { data } = await service.GetProductsPayload(_id, { productId: req.body._id, qty: 1 }, "ADD_TO_WISHLIST");
 
-      PublishCustomerEvent(data);
+      // rabbitmq ile kanala bir mesaj gönder
+      await PublishMessage(channel, CUSTOMER_BINDING_KEY, JSON.stringify(data));
 
       return res.status(200).json(data.data);
     } catch (err) {}
@@ -77,8 +79,8 @@ module.exports = (app) => {
       // gönderilcek haberi hazırla
       const { data } = await service.GetProductsPayload(_id, { productId }, "REMOVE_FROM_WISHLIST");
 
-      // customer servisine haberi gönder
-      PublishCustomerEvent(data);
+      // rabbitmq ile kanala bir mesaj gönder
+      await PublishMessage(channel, CUSTOMER_BINDING_KEY, JSON.stringify(data));
 
       return res.status(200).json(data.data);
     } catch (err) {
@@ -91,13 +93,17 @@ module.exports = (app) => {
 
     try {
       // gönderilcek haberi hazırla
-      const { data } = await service.GetProductsPayload(_id, { productId: req.body._id, qty: req.body.qty }, "ADD_TO_CART");
+      const { data } = await service.GetProductsPayload(
+        _id,
+        { productId: req.body._id, qty: req.body.qty },
+        "ADD_TO_CART"
+      );
 
-      // customer servisine haberi gönder
-      PublishCustomerEvent(data);
+      // rabbitmq ile kanala bir mesaj gönder
+      await PublishMessage(channel, CUSTOMER_BINDING_KEY, JSON.stringify(data));
 
-      // shopping servisine haberi gönder
-      PublishShoppingEvent(data);
+      // rabbitmq ile kanala bir mesaj gönder
+      await PublishMessage(channel, SHOPPING_BINDING_KEY, JSON.stringify(data));
 
       return res.status(200).json(data.data);
     } catch (err) {
@@ -113,11 +119,11 @@ module.exports = (app) => {
       // gönderilcek haberi hazırla
       const { data } = await service.GetProductsPayload(_id, { productId: req.params.id }, "REMOVE_FROM_CART");
 
-      // customer servisine haberi gönder
-      PublishCustomerEvent(data);
+      // rabbitmq ile kanala bir mesaj gönder
+      await PublishMessage(channel, CUSTOMER_BINDING_KEY, JSON.stringify(data));
 
-      // shopping servisine haberi
-      PublishShoppingEvent(data);
+      // rabbitmq ile kanala bir mesaj gönder
+      await PublishMessage(channel, SHOPPING_BINDING_KEY, JSON.stringify(data));
 
       return res.status(200).json(data.data);
     } catch (err) {

@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const amqplib = require("amqplib");
 
-const { APP_SECRET } = require("../config");
+const { APP_SECRET, MESSAGE_BROKER_URL, EXCHANGE_NAME } = require("../config");
 
 //Utility functions
 module.exports.GenerateSalt = async () => {
@@ -48,17 +48,6 @@ module.exports.FormateData = (data) => {
   }
 };
 
-//! İhtiyaç Yok
-// customer api'ına haber ver
-module.exports.PublishCustomerEvent = (payload) => {
-  axios.post("http://localhost:8000/customer/app-events", { payload });
-};
-
-// shopping api'ına haber ver
-module.exports.PublishShoppingEvent = (payload) => {
-  axios.post("http://localhost:8000/shopping/app-events", { payload });
-};
-
 //--------------- RabbitMQ Methodları --------------//
 
 //! kanal oluştur
@@ -90,5 +79,17 @@ module.exports.PublishMessage = async (channel, key, message) => {
   }
 };
 
-//TODO mesajlara abone ol
-module.exports.SubscribeMessage = async (channel, key) => {};
+//! mesajlara abone ol
+// module.exports.SubscribeMessage = async (channel, key) => {
+//   // bir kuyruk oluştur
+//   const appQueue = channel.assertQueue("Kuyruk_İsmi");
+
+//   // kuyruğu belirli bir routing key bağla
+//   channel.bindQueue(appQueue.queue, EXCHANGE_NAME, key);
+
+//   // kuyruktaki mesajlara abone ol
+//   channel.consume(appQueue.queue, (data) => {
+//     console.log("Kuyruktan mesaj alındı 🥶");
+//     console.log(data.content.string());
+//   });
+// };

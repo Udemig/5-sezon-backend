@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-const { APP_SECRET } = require("../config");
+const amqplib = require("amqplib");
+const { APP_SECRET, MESSAGE_BROKER_URL, EXCHANGE_NAME, QUEUE_NAME, CUSTOMER_BINDING_KEY } = require("../config");
 
 //Utility functions
 module.exports.GenerateSalt = async () => {
@@ -12,11 +12,7 @@ module.exports.GeneratePassword = async (password, salt) => {
   return await bcrypt.hash(password, salt);
 };
 
-module.exports.ValidatePassword = async (
-  enteredPassword,
-  savedPassword,
-  salt
-) => {
+module.exports.ValidatePassword = async (enteredPassword, savedPassword, salt) => {
   return (await this.GeneratePassword(enteredPassword, salt)) === savedPassword;
 };
 
@@ -48,4 +44,47 @@ module.exports.FormateData = (data) => {
   } else {
     throw new Error("Data Not found!");
   }
+};
+
+//--------------- RabbitMQ Methodları --------------//
+
+//! kanal oluştur
+module.exports.CreateChannel = async () => {
+  try {
+    // Rabbit mq sunucusu ile bağlantı kur
+    const connection = await amqplib.connect(MESSAGE_BROKER_URL);
+
+    // Bir iletişim kanalı oluştur
+    const channel = await connection.createChannel();
+
+    // Kanala gelen mesajları kuyruklara dağıtıcak olan exchange'i oluştur
+    channel.assertExchange(EXCHANGE_NAME, "direct", false);
+
+    // kanalı return et
+    return channel;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//! mesajlara abone ol
+module.exports.SubscribeMessage = async (channel, service) => {
+  // bir kuyruk oluştur
+  const appQueue = channel.assertQueue(QUEUE_NAME);
+
+  // kuyruğu belirli bir routing key bağla
+  channel.bindQueue(appQueue.queue, EXCHANGE_NAME, CUSTOMER_BINDING_KEY);
+
+  // kuyruktaki mesajlara abone ol
+  channel.consume(
+    appQueue.queue,
+    (msg) => {
+      if (msg.content) {
+        console.log("Kuyruktan mesaj alındı 🥶");
+
+        service.SubscribeEvents(JSON.parse(msg.content.toString()));
+      }
+    },
+    { noAck: true } // mesaj gelince rabbitMq'ya onay gönder (kuyruktan mesaj kaldırılıyor)
+  );
 };
