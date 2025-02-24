@@ -19,7 +19,7 @@ exports.authenticate = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(err);
+    console.log(error);
     return res.status(401).json({ message: "Bu route'a erişme yetkiniz yok" });
   }
 };

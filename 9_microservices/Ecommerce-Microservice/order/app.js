@@ -37,7 +37,7 @@ app.use("/", orderRoutes);
 // hata middleware'i
 app.use((err, req, res, next) => {
   console.log(err.stack);
-  res.status(500).json({ message: "Bir şeyler ters gitti" });
+  res.status(500).json({ message: err.message || "Bir şeyler ters gitti" });
 });
 
 // 404 middleware'i

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { defaultImageUrl } = require("../constants");
 
 const productSchema = new mongoose.Schema(
   {
@@ -28,6 +29,7 @@ const productSchema = new mongoose.Schema(
     },
     imageUrl: {
       type: String,
+      default: defaultImageUrl,
     },
     isActive: {
       type: Boolean,

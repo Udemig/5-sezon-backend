@@ -1,11 +1,26 @@
 const Joi = require("joi");
 
-const registerSchema = Joi.object({
-  email: Joi.string().email().required(),
-});
+const orderSchema = Joi.object({
+  products: Joi.array()
+    .items(
+      Joi.object({
+        productId: Joi.string().required(),
+        name: Joi.string().required(),
+        price: Joi.number().required(),
+        quantity: Joi.number().default(1).required(),
+      })
+    )
+    .required(),
 
-const loginSchema = Joi.object({
-  password: Joi.string().min(6).required(),
+  status: Joi.string().valid("pending", "processing", "completed", "cancelled").default("pending"),
+
+  destination: Joi.object({
+    city: Joi.string().required(),
+    district: Joi.string().required(),
+    street: Joi.string().required(),
+    apartment: Joi.number().required(),
+    flat: Joi.number().required(),
+  }).required(),
 });
 
 async function validateDto(schema, data) {
@@ -22,6 +37,5 @@ async function validateDto(schema, data) {
 
 module.exports = {
   validateDto,
-  loginSchema,
-  registerSchema,
+  orderSchema,
 };

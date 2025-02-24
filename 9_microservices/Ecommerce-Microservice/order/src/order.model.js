@@ -32,6 +32,13 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "processing", "completed", "cancelled"],
       default: "pending",
     },
+    destination: {
+      city: { type: String, required: true },
+      district: { type: String, required: true },
+      street: { type: String, required: true },
+      apartment: { type: Number, required: true },
+      flat: { type: Number, required: true },
+    },
   },
   {
     timestamps: true,
