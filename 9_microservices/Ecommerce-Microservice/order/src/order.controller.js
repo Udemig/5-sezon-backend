@@ -1,4 +1,5 @@
 const { validateDto, orderSchema } = require("./order.dto");
+const orderService = require("./order.service");
 const OrderService = require("./order.service");
 
 class OrderController {
@@ -39,7 +40,22 @@ class OrderController {
     }
   }
 
-  async updateOrderStatus(req, res, next) {}
+  async updateOrderStatus(req, res, next) {
+    try {
+      const { orderId } = req.params;
+      const { status } = req.body;
+
+      const updatedOrder = await orderService.updateOrderStatus(orderId, status);
+
+      if (!updatedOrder) {
+        return res.status(404).json({ error: "Ürün bulunamadı" });
+      }
+
+      res.json(updatedOrder);
+    } catch (error) {
+      res.status(500).json({ error: "Güncellerken bir sorun oluştu" });
+    }
+  }
 }
 
 module.exports = new OrderController();
