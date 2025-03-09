@@ -1,0 +1,179 @@
+[{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cb9"
+  },
+  "make": "Toyota",
+  "model": "Corolla",
+  "year": 2022,
+  "price": 1250,
+  "color": "White",
+  "mileage": 15000,
+  "fuelType": "Gas",
+  "transmission": "Automatic",
+  "drive": "fwd",
+  "type": "Sedan",
+  "description": "Günlük kullanım için ideal, güvenilir ve yakıt tasarruflu bir sedan.",
+  "capacity": 5,
+  "gasoline": 50
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cba"
+  },
+  "make": "Tesla",
+  "model": "Model 3",
+  "year": 2023,
+  "price": 4500,
+  "color": "Black",
+  "mileage": 5000,
+  "fuelType": "Electric",
+  "transmission": "Automatic",
+  "drive": "rwd",
+  "type": "Sedan",
+  "description": "Modern tasarıma sahip, ileri teknolojiyle donatılmış elektrikli araç.",
+  "capacity": 5
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cbb"
+  },
+  "make": "BMW",
+  "model": "X5",
+  "year": 2021,
+  "price": 6000,
+  "color": "Blue",
+  "mileage": 30000,
+  "fuelType": "Diesel",
+  "transmission": "Automatic",
+  "drive": "awd",
+  "type": "SUV",
+  "description": "Geniş iç mekana sahip, üstün sürüş deneyimi sunan lüks bir SUV.",
+  "capacity": 7,
+  "gasoline": 80
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cbc"
+  },
+  "make": "Ford",
+  "model": "Ranger",
+  "year": 2022,
+  "price": 4000,
+  "color": "Silver",
+  "mileage": 20000,
+  "fuelType": "Gas",
+  "transmission": "Manual",
+  "drive": "4fwd",
+  "type": "Pickup Truck",
+  "description": "Zorlu arazi maceraları için ideal, dayanıklı ve güçlü bir pickup.",
+  "capacity": 5,
+  "gasoline": 70
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cbd"
+  },
+  "make": "Mercedes-Benz",
+  "model": "C-Class",
+  "year": 2023,
+  "price": 5500,
+  "color": "Gray",
+  "mileage": 10000,
+  "fuelType": "Hybrid",
+  "transmission": "Automatic",
+  "drive": "rwd",
+  "type": "Sedan",
+  "description": "Şık tasarımlı, premium özelliklere sahip verimli bir hibrit sedan.",
+  "capacity": 5,
+  "gasoline": 40
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cbe"
+  },
+  "make": "Ferrari",
+  "model": "488 Spider",
+  "year": 2023,
+  "price": 12000,
+  "color": "Red",
+  "mileage": 3000,
+  "fuelType": "Gas",
+  "transmission": "Automatic",
+  "drive": "rwd",
+  "type": "Sports Car",
+  "description": "Hız ve zarafeti bir araya getiren yüksek performanslı üstü açılır spor araba.",
+  "capacity": 2,
+  "gasoline": 60
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cbf"
+  },
+  "make": "Porsche",
+  "model": "911 Carrera",
+  "year": 2023,
+  "price": 11000,
+  "color": "Silver",
+  "mileage": 2000,
+  "fuelType": "Gas",
+  "transmission": "Automatic",
+  "drive": "awd",
+  "type": "Sports Car",
+  "description": "Mükemmel yol tutuşu ve lüks tasarımıyla ikonik bir spor araba.",
+  "capacity": 2,
+  "gasoline": 55
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cc0"
+  },
+  "make": "Lamborghini",
+  "model": "Huracán Evo",
+  "year": 2023,
+  "price": 15000,
+  "color": "Yellow",
+  "mileage": 1000,
+  "fuelType": "Gas",
+  "transmission": "Automatic",
+  "drive": "awd",
+  "type": "Sports Car",
+  "description": "Üst düzey sürüş keyfi için tasarlanmış agresif ve güçlü bir süper araba.",
+  "capacity": 2,
+  "gasoline": 50
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cc1"
+  },
+  "make": "Chevrolet",
+  "model": "Corvette Stingray",
+  "year": 2022,
+  "price": 9500,
+  "color": "Blue",
+  "mileage": 5000,
+  "fuelType": "Gas",
+  "transmission": "Manual",
+  "drive": "rwd",
+  "type": "Sports Car",
+  "description": "Etkileyici güç ve keskin görünümüyle Amerikan klasiği spor araba.",
+  "capacity": 2,
+  "gasoline": 65
+},
+{
+  "_id": {
+    "$oid": "6794cb6d4e731994de1b2cc2"
+  },
+  "make": "McLaren",
+  "model": "720S",
+  "year": 2023,
+  "price": 14000,
+  "color": "Orange",
+  "mileage": 1500,
+  "fuelType": "Gas",
+  "transmission": "Automatic",
+  "drive": "rwd",
+  "type": "Sports Car",
+  "description": "Nefes kesici hız ve ileri aerodinamik tasarımla donatılmış bir süper araba.",
+  "capacity": 2,
+  "gasoline": 55
+}]

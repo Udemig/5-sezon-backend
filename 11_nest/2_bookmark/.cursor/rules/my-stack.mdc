@@ -1,0 +1,24 @@
+---
+description: Tech Stack
+globs: 
+---
+### **Core Stack**
+
+- **Runtime Environment:** Node.js
+- **Framework:** NestJS
+- **Language:** TypeScript
+- **Database ORM:** Prisma
+- **API:** REST API
+
+
+### **Additional Libraries**
+
+- **HTTP Client (for external APIs):** Axios
+- **Authentication/Authorization:** Passport.js (with JWT or OAuth)
+- **Password Hashing:** Argon2 (via `argon2` library)
+- **Validation:** class-validator and class-transformer
+- **Logging:** Winston
+- **Testing:** Jest, Supertest, and Testing Module (provided by NestJS)
+- **Prisma ORM:** Prisma (via `@prisma/client`)
+  - **Database Migrations:** Prisma Migrate
+  - **Database Management:** Prisma Studio
