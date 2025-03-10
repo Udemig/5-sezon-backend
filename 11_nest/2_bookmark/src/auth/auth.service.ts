@@ -29,11 +29,12 @@ export class AuthService {
       });
 
       // Generate tokens
-      const tokens = await this.signTokens(user.id, user.email);
-      
+      const accessToken = await this.signAccessToken(user.id, user.email);
+      const refreshToken = await this.signRefreshToken(user.id, user.email);
+
       return {
-        access_token: tokens.accessToken,
-        refresh_token: tokens.refreshToken,
+        access_token: accessToken,
+        refresh_token: refreshToken,
       };
     } catch (error) {
       if (error.code === 'P2002') {
@@ -65,11 +66,12 @@ export class AuthService {
     }
 
     // Generate tokens
-    const tokens = await this.signTokens(user.id, user.email);
-    
+    const accessToken = await this.signAccessToken(user.id, user.email);
+    const refreshToken = await this.signRefreshToken(user.id, user.email);
+
     return {
-      access_token: tokens.accessToken,
-      refresh_token: tokens.refreshToken,
+      access_token: accessToken,
+      refresh_token: refreshToken,
     };
   }
 
@@ -80,29 +82,27 @@ export class AuthService {
   }
 
   async refreshTokens(userId: number, refreshToken: string) {
-    // In a more complete implementation, you would validate the refresh token
-    // and possibly check a refresh token table in the database
-    
+    // user'ı bul
     const user = await this.prisma.user.findUnique({
       where: {
         id: userId,
       },
     });
 
+    // user bulunamadıysa
     if (!user) {
       throw new ForbiddenException('Access denied');
     }
 
-    // Generate new tokens
-    const tokens = await this.signTokens(user.id, user.email);
-    
+    // yeni erişim token'i oluştur
+    const token = await this.signAccessToken(user.id, user.email);
+
     return {
-      access_token: tokens.accessToken,
-      refresh_token: tokens.refreshToken,
+      access_token: token,
     };
   }
 
-  async signTokens(userId: number, email: string) {
+  async signAccessToken(userId: number, email: string) {
     const payload = {
       sub: userId,
       email,
@@ -113,14 +113,20 @@ export class AuthService {
       secret: this.config.get('JWT_SECRET'),
     });
 
+    return accessToken;
+  }
+
+  async signRefreshToken(userId: number, email: string) {
+    const payload = {
+      sub: userId,
+      email,
+    };
+
     const refreshToken = await this.jwt.signAsync(payload, {
       expiresIn: '7d',
       secret: this.config.get('JWT_REFRESH_SECRET'),
     });
 
-    return {
-      accessToken,
-      refreshToken,
-    };
+    return refreshToken;
   }
-} 
+}
