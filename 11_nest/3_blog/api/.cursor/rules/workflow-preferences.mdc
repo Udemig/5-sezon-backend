@@ -1,0 +1,24 @@
+---
+description: Workflow Prefernces
+globs: 
+---
+### **Task Relevance**  
+- **Focus exclusively on NestJS code** that directly impacts the current task at hand, such as services, controllers, modules, middleware, pipes, etc.
+- Avoid modifying or interacting with code unrelated to the task, including frontend code or external libraries unless specifically required.
+
+### **Testing Standards**  
+- **Implement thorough tests** using Jest (or the testing framework of choice for NestJS) for all core functionalities, such as service methods, controller routes, interceptors, guards, etc.
+- Ensure test coverage includes both **unit tests** and **integration tests** to validate intended behaviors as well as edge cases.
+- Validate behavior using **NestJS testing utilities** like `Test.createTestingModule` for testing modules and `supertest` for testing HTTP endpoints.
+
+### **Architecture and Patterns**  
+- **Follow NestJS conventions** for modules, controllers, services, and providers. Stick to the **dependency injection** system and the **separation of concerns** to keep the codebase maintainable.
+- **Avoid significant changes** to core architectural patterns unless explicitly instructed, particularly with regard to how modules are organized, the use of decorators like `@Injectable()`, `@Controller()`, and `@Module()`, etc.
+- Keep using **existing service layer patterns** and middleware integration unless there is a clear need for optimization or refactoring.
+- For persistent storage use **Prisma** as required, and follow the NestJS style for repositories and database interaction.
+
+### **Code Impact Awareness**  
+- When making changes to any part of the code, be mindful of how these changes might **impact other modules**, services, or components in the application.
+- **Check dependencies** to ensure that changes in one module do not unintentionally break other areas of the application, such as updating method signatures in services that are used by multiple components.
+- Use **NestJS exception filters** to handle errors gracefully and ensure that changes do not introduce unhandled exceptions.
+- For any public-facing API changes, ensure backward compatibility unless versioning is planned.

@@ -1,0 +1,73 @@
+---
+description: Coding Preferences
+globs: 
+---
+### **# Simplicity and Maintainability**
+
+- **Clear, Simple Solutions:** Always prioritize solutions that are simple, clear, and easy to understand. NestJS embraces clean code principles, so ensure readability and avoid complex, convoluted patterns.
+- **Organize Code Effectively:** Structure the codebase into modules, services, and controllers. Keep each module focused on a specific business domain.
+- **Modularization:** Avoid overly large files (e.g., over 400-500 lines). Break down large files into smaller, reusable components such as services, controllers, and utilities to maintain clarity.
+- **Comments and Documentation:** Use comments to explain complex logic, but avoid over-commenting trivial code. Maintain good documentation for public API endpoints and important services.
+
+---
+
+### **# Avoid Duplication**
+
+- **DRY (Don’t Repeat Yourself):** Reuse code wherever possible. Before writing new code, check for existing solutions or utilities in the codebase that could achieve the same result.
+- **Helper Functions and Libraries:** If the same logic is used across different parts of the application, consider refactoring it into a utility or shared service to avoid repetition.
+- **Refactor Proactively:** Always refactor when you notice duplicated logic in your code. Maintain DRY principles to keep the codebase clean.
+
+---
+
+### **# Environment Considerations**
+
+- **Environment-Specific Code:** Write and test code explicitly for different environments (e.g., `development`, `test`, `production`). Use environment variables (`.env`) to switch between configurations such as database connections or API keys.
+- **Environment-Sensitive Code:** Avoid hardcoding environment-specific variables. Instead, always refer to values from the environment configuration (`process.env`) or configuration services provided by NestJS.
+- **Ensure Isolation Between Environments:** Changes in one environment (e.g., dev) should not have unintended side effects in another environment (e.g., prod).
+
+---
+
+### **# Scoped Changes**
+
+- **Limit Scope of Changes:** When making changes, limit them strictly to what is necessary for the requested task. Avoid introducing unrelated updates in the same PR to maintain clear and understandable commits.
+- **Do One Thing Well:** Each module or service should do one thing well. Avoid making sweeping changes that add unnecessary complexity.
+- **Commit Small, Incremental Changes:** When updating the codebase, make smaller, focused commits instead of large, sweeping changes that touch multiple areas of the app.
+
+---
+
+### **# Bug Fixes and Patterns**
+
+- **Exhaust Existing Options:** When addressing bugs, exhaust the current framework’s existing patterns, libraries, or utilities before introducing new patterns or third-party libraries.
+- **Avoid Unnecessary Technologies:** Do not introduce new technologies, frameworks, or complex patterns unless they are required for solving a specific problem. Always have a clear understanding of the trade-offs and need for these changes.
+- **Follow NestJS Best Practices:** Stick to established best practices in NestJS, like leveraging decorators (`@Injectable`, `@Controller`, `@Get`, `@Post`, etc.) and providers. Always check the NestJS documentation before introducing custom solutions.
+
+---
+
+### **# Scripts and Temporary Code**
+
+- **Minimize Temporary Scripts:** Avoid adding temporary scripts or code snippets directly into production code files. If you need a script for a one-off task, consider placing it in a dedicated folder (e.g., `/scripts`) or using tools like migration libraries instead.
+- **Clean Up After Use:** Ensure that temporary code or debug scripts are removed once they have served their purpose, ensuring the codebase remains clean and professional.
+
+---
+
+### **# Data Management**
+
+- **Realistic Data in Development:** Never introduce mock or stubbed database data in production or development environments unless explicitly needed for testing. Use database seeding or fixtures to populate real-world-like data where appropriate.
+- **Do Not Stub Database in Dev/Prod:** Avoid adding stubs or mocks for databases in environments where you need real data (e.g., development or production). Rely on real database instances or mock data only in test environments.
+
+---
+
+### **# Environment Files**
+
+- **Respect `.env` Files:** Never overwrite or make unapproved changes to `.env` files, as these contain sensitive environment-specific configurations (e.g., database credentials, API keys).
+- **Version Control Caution:** Avoid committing `.env` files to version control systems. Use `.env.example` files to demonstrate required environment variables.
+- **Consistency Across Environments:** Keep environment variables consistent across dev/test/prod environments. Make sure developers and CI/CD pipelines use the appropriate configuration files for each environment.
+
+---
+
+### **General Best Practices for NestJS**
+
+- **Asynchronous Code:** When dealing with asynchronous operations (e.g., database calls, external API requests), always handle promises or use `async/await` properly to avoid callback hell and ensure proper error handling.
+- **Validation and Error Handling:** Always validate input using **class-validator** and **DTOs** (Data Transfer Objects). Provide proper exception filters and global error handlers for a consistent and structured error response.
+- **Logging:** Use a consistent logging mechanism (e.g., `winston`) across the application for debugging, monitoring, and audit logging. Make sure logs are structured, helpful, and environment-specific.
+- **Security Best Practices:** Always sanitize inputs to avoid SQL injection, XSS attacks, etc. Use JWTs or OAuth2 for authentication and never store passwords in plaintext (use Argon2 or bcrypt for password hashing).

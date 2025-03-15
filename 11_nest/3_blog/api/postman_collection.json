@@ -1,0 +1,432 @@
+{
+  "info": {
+    "_postman_id": "4a2e3b9f-8a5c-4e06-a5f2-70d1a3a54321",
+    "name": "Blog API",
+    "description": "Blog API için test endpointleri",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Kayıt Ol",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"testuser\",\n    \"email\": \"test@example.com\",\n    \"password\": \"Test123!@#\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Yeni kullanıcı oluştur"
+          },
+          "response": []
+        },
+        {
+          "name": "Giriş Yap",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Token'ı environment'a kaydet",
+                  "var jsonData = pm.response.json();",
+                  "",
+                  "if (jsonData && jsonData.access_token) {",
+                  "    pm.environment.set('accessToken', jsonData.access_token);",
+                  "    console.log('Access token kaydedildi!');",
+                  "}",
+                  "",
+                  "if (jsonData && jsonData.refresh_token) {",
+                  "    pm.environment.set('refreshToken', jsonData.refresh_token);",
+                  "    console.log('Refresh token kaydedildi!');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"Test123!@#\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Kullanıcı girişi"
+          },
+          "response": []
+        },
+        {
+          "name": "Token Yenile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Yeni token'ı environment'a kaydet",
+                  "var jsonData = pm.response.json();",
+                  "",
+                  "if (jsonData && jsonData.access_token) {",
+                  "    pm.environment.set('accessToken', jsonData.access_token);",
+                  "    console.log('Yeni access token kaydedildi!');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh_token\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "refresh"]
+            },
+            "description": "Refresh token ile yeni access token al"
+          },
+          "response": []
+        },
+        {
+          "name": "Çıkış Yap",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            },
+            "description": "Oturumu kapat"
+          },
+          "response": []
+        },
+        {
+          "name": "Kullanıcı Profili",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "profile"]
+            },
+            "description": "Giriş yapmış kullanıcının bilgilerini getir"
+          },
+          "response": []
+        }
+      ],
+      "description": "Kimlik doğrulama işlemleri"
+    },
+    {
+      "name": "Blog",
+      "item": [
+        {
+          "name": "Tüm Blog Yazıları",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Tüm blog yazılarını listele"
+          },
+          "response": []
+        },
+        {
+          "name": "Blog Yazısı Detayı",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Blog yazısı id"
+                }
+              ]
+            },
+            "description": "Belirli bir blog yazısının detayını getir"
+          },
+          "response": []
+        },
+        {
+          "name": "Blog Yazısı Oluştur",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Yeni Blog Yazısı\",\n    \"content\": \"Bu bir test blog yazısıdır\",\n    \"tags\": [\"test\", \"api\", \"blog\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"]
+            },
+            "description": "Yeni blog yazısı oluştur"
+          },
+          "response": []
+        },
+        {
+          "name": "Blog Yazısı Güncelle",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Güncellenmiş Blog Yazısı\",\n    \"content\": \"Bu içerik güncellendi\",\n    \"tags\": [\"güncelleme\", \"api\", \"blog\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Blog yazısı id"
+                }
+              ]
+            },
+            "description": "Mevcut bir blog yazısını güncelle"
+          },
+          "response": []
+        },
+        {
+          "name": "Blog Yazısı Sil",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Blog yazısı id"
+                }
+              ]
+            },
+            "description": "Blog yazısını sil"
+          },
+          "response": []
+        }
+      ],
+      "description": "Blog yazıları ile ilgili işlemler"
+    },
+    {
+      "name": "Yorumlar",
+      "item": [
+        {
+          "name": "Yazı Yorumları",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/:postId/comments",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", ":postId", "comments"],
+              "variable": [
+                {
+                  "key": "postId",
+                  "value": "1",
+                  "description": "Blog yazısı id"
+                }
+              ]
+            },
+            "description": "Belirli bir yazı için yorumları listele"
+          },
+          "response": []
+        },
+        {
+          "name": "Yorum Ekle",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": \"Bu harika bir yazı olmuş!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/:postId/comments",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", ":postId", "comments"],
+              "variable": [
+                {
+                  "key": "postId",
+                  "value": "1",
+                  "description": "Blog yazısı id"
+                }
+              ]
+            },
+            "description": "Yazıya yeni yorum ekle"
+          },
+          "response": []
+        },
+        {
+          "name": "Yorum Sil",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/comments/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Yorum id"
+                }
+              ]
+            },
+            "description": "Yorumu sil"
+          },
+          "response": []
+        }
+      ],
+      "description": "Blog yazılarına yapılan yorumlar"
+    }
+  ]
+}
