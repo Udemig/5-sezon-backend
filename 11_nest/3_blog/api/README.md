@@ -35,13 +35,14 @@
 - POST `/auth/logout` - Kullanıcı çıkışı
 - POST `/auth/refresh-token` - Token yenileme
 
-- GET `/user/me` - Mevcut kullanıcı bilgileri
-- PATCH `/user/me` - Profil bilgilerini güncelle
+- GET `/user/me` - Mevcut kullanıcı bilgileri (Auth gerekli)
+- PATCH `/user/me` - Profil bilgilerini güncelle (Auth gerekli)
 
 - GET `/posts` - Tüm yazıları getir
 - GET `/posts/:id` - Yazıyı getir
 - POST `/posts` - Yeni bir yazı oluştur (Auth gerekli)
 - PATCH `/posts/:id` - Yazıyı güncelle (Auth gerekli, yazarı aynı olmalı)
 - DELETE `/posts/:id` - Yazıyı sil (Auth gerekli, yazarı aynı olmalı)
+
 - POST `/posts/:id/comments` - Yeni bir yorum oluştur (Auth gerekli)
 - GET `/posts/:id/comments` - Yazıya ait yorumları getir

@@ -20,8 +20,7 @@ export class AuthService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (user && isPasswordValid) {
-      const { password, ...userWithoutPassword } = user.toObject();
-      return userWithoutPassword;
+      return user;
     }
 
     return null;
@@ -61,9 +60,7 @@ export class AuthService {
     try {
       const user = await this.userService.create(createUserDto);
 
-      const { password, ...userWithoutPassword } = user;
-
-      return userWithoutPassword;
+      return user;
     } catch (error) {
       if (error.code === 11000) {
         throw new BadRequestException(
@@ -75,27 +72,26 @@ export class AuthService {
     }
   }
 
-  async login(user: Omit<UserDocument, 'password'>) {
-    const { _id, username } = user;
-
-    const tokens = await this.generateTokens(_id as string, username);
+  async login(user: UserDocument) {
+    const tokens = await this.generateTokens(user._id as string, user.username);
 
     return {
       user: {
-        id: user._id,
+        id: (user._id as string).toString(),
         username: user.username,
         email: user.email,
         profilePicture: user.profilePicture,
       },
-      ...tokens,
+      access: tokens.accessToken,
+      refresh: tokens.refreshToken,
     };
   }
 
-  async refreshToken(refreshTokenDto: string) {
+  async refreshToken(user: UserDocument) {
     return 'test';
   }
 
-  async logout(userId: string, refreshTokenDto: string) {
+  async logout(userId: string) {
     await this.userService.removeRefreshToken(userId);
     return { success: true };
   }

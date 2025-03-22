@@ -49,18 +49,18 @@ export class UserService {
   }
 
   // kullanıcıyı güncelle
-  async update(
-    id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UserDocument> {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    // kullanıcıyı güncelle
     const user = await this.userModel.findByIdAndUpdate(id, updateUserDto, {
       new: true,
     });
 
+    // kullanıcı bulunamadıysa hata döndür
     if (!user) {
       throw new NotFoundException('Kullanıcı bulunamadı');
     }
 
+    // kullanıcıyı döndür
     return user;
   }
 
