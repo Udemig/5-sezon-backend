@@ -43,26 +43,40 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return { user, access };
+    res.cookie('access_token', access, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 1 * 60 * 60 * 1000,
+    });
+
+    return { user };
   }
 
   // refresh strategy'i kullanıp refresh token'ı doğrulaması yap
   @UseGuards(RefreshAuthGuard)
   @Post('refresh')
-  refresh(@Request() req: Req) {
-    return {
-      access_token: this.authService.generateAccessToken(
-        req.user!._id,
-        req.user!.username,
-      ),
-    };
+  refresh(@Request() req: Req, @Res({ passthrough: true }) res) {
+    const access = this.authService.generateAccessToken(
+      req.user!._id,
+      req.user!.username,
+    );
+
+    res.cookie('access_token', access, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 1 * 60 * 60 * 1000,
+    });
+
+    return { message: 'Yeni Erişim Tokeni Oluşturuldu' };
   }
 
   // jwt strategy'i kullanıp access token' doğrulaması yap
   // authService'de refresh token'ı db'den kaldır
   @UseGuards(JwtAuthGuard)
   @Post('logout')
-  async logout(@Request() req: Req) {
+  async logout(@Request() req: Req, @Res({ passthrough: true }) res) {
+    res.clearCookie('access_token');
+    res.clearCookie('refresh_token');
     return await this.authService.logout(req.user!._id);
   }
 }

@@ -4,15 +4,18 @@ import Input from "../../components/input";
 import { Formik, Form } from "formik";
 import { loginInitialValues } from "../../utils/constants";
 import { loginSchema } from "../../utils/schema";
+import { useAuth } from "../../providers/auth-provider";
 
 const Login: FC = () => {
+  const { login } = useAuth();
+
   interface LoginValues {
     username: string;
     password: string;
   }
 
   const handleSubmit = (values: LoginValues) => {
-    console.log(values);
+    login(values);
   };
 
   return (

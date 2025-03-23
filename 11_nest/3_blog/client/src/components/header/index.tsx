@@ -1,9 +1,11 @@
 import { FC } from "react";
 import { IoMdArrowRoundUp as Arrow } from "react-icons/io";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../../providers/auth-provider";
 
 const Header: FC = () => {
-  const isAuth = false;
+  const { user, loading, logout } = useAuth();
+
   return (
     <header>
       <div className="bg-dark-08 text-sm md:text-base text-center px-4 py-2  md:p-6 md:py-3 font-inter text-grey-60 flex justify-center gap-2">
@@ -33,7 +35,7 @@ const Header: FC = () => {
         </nav>
 
         <div>
-          {!isAuth ? (
+          {!user && !loading ? (
             <Link
               to="/register"
               className="bg-yellow-55 text-black px-3 py-1 text-sm md:text-base rounded cursor-pointer"
@@ -41,8 +43,18 @@ const Header: FC = () => {
               Bize Katıl
             </Link>
           ) : (
-            <div>
-              <span className="text-sm">Furkan Evin</span>
+            <div className="group relative text-sm md:text-base">
+              <span>{user?.username}</span>
+
+              <div className="hidden group-hover:block absolute top-5 -right-2 bg-black p-1 rounded-md">
+                <Link to="/blog/create">
+                  <button className="dropdown-link">Blog Yaz</button>
+                </Link>
+
+                <button onClick={logout} className="dropdown-link">
+                  Çıkış Yap
+                </button>
+              </div>
             </div>
           )}
         </div>

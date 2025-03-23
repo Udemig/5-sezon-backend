@@ -1,9 +1,16 @@
 import { FC } from "react";
+import Hero from "./hero";
+import Ad from "./ad";
+import List from "../../components/list";
 
 const Home: FC = () => {
   return (
-    <div className="bg-grey-50">
-      <h1>Selam Deneme</h1>
+    <div>
+      <Hero />
+
+      <Ad />
+
+      <List />
     </div>
   );
 };

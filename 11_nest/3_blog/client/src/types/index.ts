@@ -25,8 +25,6 @@ interface User {
 
 interface LoginResponse {
   user: User;
-  access: string;
-  refresh: string;
 }
 
 interface RefreshResponse {
@@ -37,6 +35,33 @@ interface LogoutResponse {
   success: boolean;
 }
 
+interface Blog {
+  _id: string;
+  title: string;
+  content: string;
+  author: User;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface GetAllParams {
+  page: number;
+  limit: number;
+}
+
+interface GetAllResponse {
+  posts: Blog[];
+  total: number;
+  totalPages: number;
+}
+
+interface CreateBlogValues {
+  title: string;
+  content: string;
+  tags: string[];
+}
+
 export type {
   RegisterValues,
   LoginValues,
@@ -45,4 +70,8 @@ export type {
   LoginResponse,
   RefreshResponse,
   LogoutResponse,
+  GetAllParams,
+  Blog,
+  GetAllResponse,
+  CreateBlogValues,
 };

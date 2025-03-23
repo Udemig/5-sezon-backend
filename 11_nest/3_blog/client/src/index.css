@@ -43,4 +43,12 @@
   .padding-x {
     @apply px-[16px] md:px-[30px] lg:px-[40px] xl:px-[80px] 2xl:px-[160px];
   }
+
+  .dropdown-link {
+    @apply hover:bg-zinc-700/80 transition px-3 py-1 rounded-md cursor-pointer whitespace-nowrap w-full;
+  }
+
+  .small-text {
+    @apply text-grey-50 text-sm md:text-base xl:text-lg;
+  }
 }
