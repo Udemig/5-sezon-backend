@@ -30,7 +30,7 @@ const List: React.FC = () => {
         ))}
       </div>
 
-      <div className="min-h-[50vh] py-5 lg:py-10 xl:py-15 padding-x">
+      <div className="min-h-[50vh] py-5 lg:py-10 xl:py-15">
         {data?.posts.map((blog) => (
           <Post key={blog._id} post={blog} />
         ))}

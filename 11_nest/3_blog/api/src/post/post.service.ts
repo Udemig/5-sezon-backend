@@ -28,15 +28,17 @@ export class PostService {
   async findAll(
     page: number = 1,
     limit: number = 10,
+    user?: UserDocument,
   ): Promise<{
     posts: PostDocument[];
     total: number;
     totalPages: number;
   }> {
+    console.log(user);
     // hem postları hem toplam sayıyı alıcak sorguları aynı anda çalıştırdık
     const [posts, total] = await Promise.all([
       this.postModel
-        .find()
+        .find(user ? { author: user._id } : {})
         .populate('author', '-password -refreshToken -__v')
         .skip((page - 1) * limit)
         .limit(limit),

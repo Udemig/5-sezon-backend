@@ -62,6 +62,20 @@ interface CreateBlogValues {
   tags: string[];
 }
 
+interface Comment {
+  _id: string;
+  content: string;
+  post: string;
+  author: User;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface ApiReponse<T> {
+  data: T;
+  status: number;
+}
+
 export type {
   RegisterValues,
   LoginValues,
@@ -74,4 +88,6 @@ export type {
   Blog,
   GetAllResponse,
   CreateBlogValues,
+  Comment,
+  ApiReponse,
 };

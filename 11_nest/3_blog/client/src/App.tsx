@@ -4,10 +4,10 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Header from "./components/header";
 import Footer from "./components/footer";
-import Create from "./pages/create";
 import Detail from "./pages/detail";
-import Edit from "./pages/edit";
 import Protected from "./components/protected";
+import BlogForm from "./pages/form";
+import OwnBlogs from "./pages/own-blogs";
 
 function App() {
   return (
@@ -22,8 +22,9 @@ function App() {
           <Route path="/blog/:id" element={<Detail />} />
 
           <Route element={<Protected />}>
-            <Route path="/blog/create" element={<Create />} />
-            <Route path="/blog/:id/edit" element={<Edit />} />
+            <Route path="/blog/create" element={<BlogForm />} />
+            <Route path="/blog/:id/edit" element={<BlogForm />} />
+            <Route path="/own-blogs" element={<OwnBlogs />} />
           </Route>
         </Routes>
       </main>

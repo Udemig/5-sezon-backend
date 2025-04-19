@@ -14,6 +14,12 @@ const blogService = {
     return response.data;
   },
 
+  getOwn: async (params?: GetAllParams) => {
+    const response = await api.get<GetAllResponse>("/posts/own", { params });
+
+    return response.data;
+  },
+
   create: async (values: CreateBlogValues) => {
     const response = await api.post<Blog>("/posts", values);
 

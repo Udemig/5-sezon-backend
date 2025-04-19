@@ -38,6 +38,17 @@ export class PostController {
     return this.postService.findAll(page, limit);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/own')
+  findAllByUserId(
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Request() req: Req,
+  ) {
+    console.log(req);
+    return this.postService.findAll(page, limit, req.user as UserDocument);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.postService.findOne(id);

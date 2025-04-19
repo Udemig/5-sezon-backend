@@ -17,3 +17,12 @@ export const loginSchema = Yup.object().shape({
   username: Yup.string().required("Kullanıcı adı zorunludur"),
   password: Yup.string().required("Şifre zorunludur"),
 });
+
+export const blogSchema = Yup.object().shape({
+  title: Yup.string()
+    .required("Başlık zorunludur")
+    .min(3, "Başlık en az 3 karakter olmalıdır"),
+  content: Yup.string()
+    .required("İçerik zorunludur")
+    .min(10, "İçerik en az 10 karakter olmalıdır"),
+});

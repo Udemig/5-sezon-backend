@@ -25,7 +25,7 @@ const Header: FC = () => {
 
         <nav className="flex items-center gap-4 text-sm md:text-base text-grey-50">
           <NavLink to="/">Anasayfa</NavLink>
-          <NavLink to="/blogs">Bloglar</NavLink>
+          <NavLink to="/own-blogs">Bloglarım</NavLink>
           <NavLink to="/about" className="max-md:hidden">
             Hakkımızda
           </NavLink>

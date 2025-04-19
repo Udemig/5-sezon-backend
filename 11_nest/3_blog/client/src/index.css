@@ -51,4 +51,8 @@
   .small-text {
     @apply text-grey-50 text-sm md:text-base xl:text-lg;
   }
+
+  .blog-button {
+    @apply border border-zinc-700 px-4 py-1 rounded-lg hover:bg-zinc-700 transition cursor-pointer flex items-center gap-2;
+  }
 }

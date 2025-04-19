@@ -16,10 +16,17 @@ export const useBlogs = (params?: GetAllParams) => {
       },
     });
 
+  const ownBlogs = () =>
+    useQuery({
+      queryKey: ["ownBlogs", params],
+      queryFn: () => blogService.getOwn(params),
+    });
+
   const blog = (id: string) =>
     useQuery({
       queryKey: ["blog", id],
       queryFn: () => blogService.getById(id),
+      enabled: !!id,
     });
 
   const createBlog = useMutation({
@@ -58,7 +65,7 @@ export const useBlogs = (params?: GetAllParams) => {
     mutationKey: ["deleteBlog"],
     mutationFn: (id: string) => blogService.delete(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["blogs"] });
+      queryClient.invalidateQueries({ queryKey: ["ownBlogs"] });
       toast.success("Blog başarıyla silindi");
     },
     onError: (error) => {
@@ -68,6 +75,7 @@ export const useBlogs = (params?: GetAllParams) => {
 
   return {
     blogs,
+    ownBlogs,
     blog,
     createBlog,
     updateBlog,
