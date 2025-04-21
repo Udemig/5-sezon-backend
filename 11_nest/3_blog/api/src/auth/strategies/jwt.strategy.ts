@@ -25,6 +25,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // payload'ın içindeki sub'ı kullanarak kullanıcıyı bul
     const user = await this.userService.findById(payload.sub);
 
+    console.log('selammmm');
+
     // kullanıcı bulunamadıysa hata döndür
     if (!user) {
       throw new UnauthorizedException('User not found');

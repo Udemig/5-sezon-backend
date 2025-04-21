@@ -43,6 +43,9 @@ interface Blog {
   tags: string[];
   createdAt: string;
   updatedAt: string;
+  likeCount: number;
+  commentCount: number;
+  shareCount: number;
 }
 
 interface GetAllParams {

@@ -17,7 +17,7 @@ const CommentForm = ({ postId }: { postId: string }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+    <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-5">
       <input
         name="text"
         className="flex-1 border border-dark-20 rounded-md py-2 px-4 focus:border-white/70 outline-none"

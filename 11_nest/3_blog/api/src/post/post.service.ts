@@ -34,12 +34,12 @@ export class PostService {
     total: number;
     totalPages: number;
   }> {
-    console.log(user);
     // hem postları hem toplam sayıyı alıcak sorguları aynı anda çalıştırdık
     const [posts, total] = await Promise.all([
       this.postModel
         .find(user ? { author: user._id } : {})
         .populate('author', '-password -refreshToken -__v')
+        .populate('commentCount')
         .skip((page - 1) * limit)
         .limit(limit),
       this.postModel.countDocuments(),

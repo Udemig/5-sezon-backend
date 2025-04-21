@@ -35,7 +35,7 @@ const Detail: FC = () => {
             </span>
           </p>
 
-          <div className="flex flex-col gap-5 px-3 md:px-5 pt-5">
+          <div className="flex flex-col gap-5 px-3 md:px-5 py-5">
             {data?.tags.map((tag) => (
               <div
                 key={tag}

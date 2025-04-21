@@ -54,17 +54,17 @@ const Post: FC<Props> = ({ post }) => {
         <div className="flex gap-5 mt-5">
           <button className="border border-zinc-700 bg-zinc-800 p-1 w-[70px] flex items-center justify-center gap-2 rounded-full cursor-pointer hover:bg-zinc-900 text-gray-300">
             <FaRegHeart />
-            <span className="text-sm">32k</span>
+            <span className="text-sm">{post.likeCount}</span>
           </button>
 
           <button className="border border-zinc-700 bg-zinc-800 p-1 w-[70px] flex items-center justify-center gap-2 rounded-full cursor-pointer hover:bg-zinc-900 text-gray-300">
             <FaRegComment />
-            <span className="text-sm">16k</span>
+            <span className="text-sm">{post.commentCount}</span>
           </button>
 
           <button className="border border-zinc-700 bg-zinc-800 p-1 w-[70px] flex items-center justify-center gap-2 rounded-full cursor-pointer hover:bg-zinc-900 text-gray-300">
             <FaRegShareFromSquare />
-            <span className="text-sm">4.2k</span>
+            <span className="text-sm">{post.shareCount}</span>
           </button>
         </div>
       </div>

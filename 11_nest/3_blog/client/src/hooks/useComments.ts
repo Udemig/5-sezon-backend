@@ -28,6 +28,7 @@ const useComments = () => {
     mutationKey: ["deleteComment"],
     mutationFn: (commentId: string) => commentService.delete(commentId),
     onSuccess: () => {
+      toast.success("Yorum başarıyla silindi");
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
     onError: (error) => {
