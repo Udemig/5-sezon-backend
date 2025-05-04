@@ -60,9 +60,7 @@ export const createRecipe = (req, res) => {
   writeRecipes(data);
 
   // 6) cevap gönder
-  res
-    .status(201)
-    .json({ message: "Yeni tarif oluşturuldu", recipe: newRecipe });
+  res.status(201).json({ message: req.__("newRecipe"), recipe: newRecipe });
 };
 
 export const getRecipe = (req, res) => {

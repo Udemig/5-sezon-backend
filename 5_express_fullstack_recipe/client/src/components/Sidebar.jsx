@@ -1,7 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { links } from "../constants";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
+  const { i18n } = useTranslation();
+
+  const handleChangeLang = (lang) => {
+    i18n.changeLanguage(lang);
+  };
+
   return (
     <aside className="flex flex-col h-screen justify-between items-center md:px-3 py-3 max-md:gap-20 max-md:justify-normal">
       <img
@@ -22,6 +29,21 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </nav>
+
+      <div className="flex flex-col gap-2">
+        <button
+          onClick={() => handleChangeLang("tr")}
+          className="bg-red-500 p-2 rounded-lg text-white hover:bg-red-400"
+        >
+          TR
+        </button>
+        <button
+          onClick={() => handleChangeLang("en")}
+          className="bg-blue-500 p-2 rounded-lg text-white hover:bg-blue-400"
+        >
+          EN
+        </button>
+      </div>
 
       <div className="flex flex-col gap-2 max-md:hidden">
         <p className="font-semibold">Günlük Haberleri al</p>

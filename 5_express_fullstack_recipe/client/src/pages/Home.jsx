@@ -7,8 +7,11 @@ import { useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  // i18n import edildi
+  const { t } = useTranslation();
   const [order, setOrder] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedTerm = useDebounce(searchTerm, 500);
@@ -23,13 +26,13 @@ const Home = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["recipes", order, debouncedTerm],
     queryFn: () =>
-      api
-        .get("/api/v1/recipes", { params })
-        .then((res) => res.data.recipes),
+      api.get("/api/v1/recipes", { params }).then((res) => res.data.recipes),
   });
 
   return (
     <main className="overflow-y-auto">
+      <h1 className="text-3xl my-5">{t("welcome")}</h1>
+
       <Search setSearchTerm={setSearchTerm} />
 
       <section>
@@ -41,7 +44,7 @@ const Home = () => {
           <>
             <div className="flex justify-between items-center">
               <h1 className="text-3xl my-5">
-                {data.length} tarif bulundu
+                {data.length} {t("found")}
               </h1>
 
               <Sort setOrder={setOrder} />

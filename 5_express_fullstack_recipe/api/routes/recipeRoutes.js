@@ -10,6 +10,13 @@ import express from "express";
 
 const router = express.Router();
 
+router.route("/").get((req, res) => {
+  res.json({
+    message: req.__("welcome"),
+    date: new Date().toLocaleDateString(),
+  });
+});
+
 router
   .route("/api/v1/recipes") //
   .get(getAllRecipes)
